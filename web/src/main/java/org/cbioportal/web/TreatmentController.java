@@ -97,4 +97,49 @@ public class TreatmentController {
         List<SampleTreatmentRow> treatments = treatmentService.getAllSampleTreatmentRows(sampleIds, studyIds);
         return new ResponseEntity<>(treatments, HttpStatus.OK);
     }
+
+    @PreAuthorize("hasPermission(#involvedCancerStudies, 'Collection<CancerStudyId>', 'read')")
+    @RequestMapping(value = "/treatments/display-sample", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("Should sample level treatments be displayed")
+    public ResponseEntity<Boolean> getSampleTreatmentsExist(
+        @ApiParam(required = true, value = "Study view filter")
+        @Valid
+        @RequestBody(required = false)
+            StudyViewFilter studyViewFilter,
+
+        @ApiIgnore // prevent reference to this attribute in the swagger-ui interface
+        @RequestAttribute(required = false, value = "involvedCancerStudies")
+            Collection<String> involvedCancerStudies,
+
+        @ApiIgnore // prevent reference to this attribute in the swagger-ui interface. this attribute is needed for the @PreAuthorize tag above.
+        @Valid
+        @RequestAttribute(required = false, value = "interceptedStudyViewFilter")
+            StudyViewFilter interceptedStudyViewFilter
+    ) {
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasPermission(#involvedCancerStudies, 'Collection<CancerStudyId>', 'read')")
+    @RequestMapping(value = "/treatments/display-patient", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("Should patient level treatments be displayed")
+    public ResponseEntity<Boolean> getPatientTreatmentsExist(
+        @ApiParam(required = true, value = "Study view filter")
+        @Valid
+        @RequestBody(required = false)
+        StudyViewFilter studyViewFilter,
+
+        @ApiIgnore // prevent reference to this attribute in the swagger-ui interface
+        @RequestAttribute(required = false, value = "involvedCancerStudies")
+        Collection<String> involvedCancerStudies,
+
+        @ApiIgnore // prevent reference to this attribute in the swagger-ui interface. this attribute is needed for the @PreAuthorize tag above.
+        @Valid
+        @RequestAttribute(required = true, value = "interceptedStudyViewFilter")
+        StudyViewFilter interceptedStudyViewFilter
+    ) {
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+    
+    
+    
 }
