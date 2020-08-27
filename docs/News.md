@@ -1,9 +1,9 @@
 ## August 27th, 2020
- - Release of the first version of the **AACR Project GENIE BPC NSCLC cohort**, consisting of 2,006 samples from 1,848 patients
- - New cBioPortal features to support the BPC data:
-	- Improved patient timelines that show time of sample acquisition, sequencing, all lines of treatments as well as response data from PRISSMM ([see example](https://genie-private.cbioportal.org/patient?caseId=GENIE-MSK-P-0008422&studyId=nsclc_genie_bpc))
-	- New study view feature that allows the selection of all patients treated with a specific drug, as well as all samples sequenced pre or post specific drug treatments [![treatment selection](https://user-images.githubusercontent.com/1334004/91475423-8f344900-e869-11ea-8b9f-741fe94a926d.png)](https://genie-private.cbioportal.org/study/summary?id=nsclc_genie_bpc)
-	- Support for overall survival and progression-free survival for all treatment regimens. These are available in the *Study View* and in *Group Comparison*
+ * Release of the first version of the **AACR Project GENIE BPC NSCLC cohort**, consisting of 2,006 samples from 1,848 patients
+ * New cBioPortal features to support the BPC data:
+	* Improved patient timelines that show time of sample acquisition, sequencing, all lines of treatments as well as response data from PRISSMM ([see example](https://genie-private.cbioportal.org/patient?caseId=GENIE-MSK-P-0008422&studyId=nsclc_genie_bpc))
+	* New study view feature that allows the selection of all patients treated with a specific drug, as well as all samples sequenced pre or post specific drug treatments [![treatment selection](https://user-images.githubusercontent.com/1334004/91475423-8f344900-e869-11ea-8b9f-741fe94a926d.png)](https://genie-private.cbioportal.org/study/summary?id=nsclc_genie_bpc)
+	* Support for overall survival and progression-free survival for all treatment regimens. These are available in the *Study View* and in *Group Comparison*
 
 ## July 13, 2019
  *   **Public Release 6.1 of AACR Project GENIE:**
