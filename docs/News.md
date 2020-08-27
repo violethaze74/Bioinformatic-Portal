@@ -1,3 +1,13 @@
+## August 27th, 2019
+ - Release of the first version of the **AACR Project GENIE BPC NSCLC cohort**, consisting of 2,006 samples from 1,848 patients
+ - New cBioPortal features to support the BPC data:
+	- Improved patient timelines that show time of sample acquisition, sequencing, all lines of treatments as well as response data from PRISSMM ([see example](https://genie-private.cbioportal.org/patient?caseId=GENIE-MSK-P-0008422&studyId=genie_bpc_test_2))
+	- New study view feature that allows the selection of all patients treated with a specific drug, as well as all samples sequenced pre or post specific drug treatments
+    
+        [![treatment selection](https://user-images.githubusercontent.com/1334004/91475423-8f344900-e869-11ea-8b9f-741fe94a926d.png)](https://genie-private.cbioportal.org/study/summary?id=genie_bpc_test_2)
+    
+	- Support for overall survival and progression-free survival for all treatment regimens. These are available in the *Study View* and in *Group Comparison*
+
 ## July 13, 2019
  *   **Public Release 6.1 of AACR Project GENIE:**
      *   The sixth data set, GENIE 6.0-public, was released in early July 2019.  A patch to GENIE 6.0-public, GENIE 6.1-pubic, was subsequently released on July 13, 2019.  The combined data set now includes nearly 70,000 de-identified genomic records collected from patients who were treated at each of the consortium's participating institutions, making it among the largest fully public cancer genomic data sets released to date. The combined data set now includes data for nearly 80 major cancer types, including data from nearly 11,000 patients with lung cancer, greater than  9,700 patients with breast cancer, and nearly 7,000 patients with colorectal cancer.
