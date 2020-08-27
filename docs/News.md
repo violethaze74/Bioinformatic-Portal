@@ -1,4 +1,4 @@
-## August 27th, 2019
+## August 27th, 2020
  - Release of the first version of the **AACR Project GENIE BPC NSCLC cohort**, consisting of 2,006 samples from 1,848 patients
  - New cBioPortal features to support the BPC data:
 	- Improved patient timelines that show time of sample acquisition, sequencing, all lines of treatments as well as response data from PRISSMM ([see example](https://genie-private.cbioportal.org/patient?caseId=GENIE-MSK-P-0008422&studyId=genie_bpc_test_2))
