@@ -1,32 +1,34 @@
 package org.cbioportal.web.parameter;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.List;
 
 import javax.validation.constraints.Size;
 
 public class MolecularProfileCasesGroupAndAlterationTypeFilter {
 
+
+    private AlterationEventTypeFilter alterationEventTypes;
     @Size(min = 1, max = PagingConstants.MAX_PAGE_SIZE)
-    private List<AlterationEnrichmentEventType> AlterationEnrichmentEventTypes;
-    private List<MolecularProfileCasesGroupFilter> MolecularProfileCasesGroupFilter;
+    @ApiModelProperty(required = true)
+    private List<MolecularProfileCasesGroupFilter> molecularProfileCasesGroupFilter;
  
 
     public List<MolecularProfileCasesGroupFilter> getMolecularProfileCasesGroupFilter() {
-        return MolecularProfileCasesGroupFilter;
+        return this.molecularProfileCasesGroupFilter;
     }
 
     public void setMolecularProfileCasesGroupFilter(
             List<MolecularProfileCasesGroupFilter> molecularProfileCasesGroupFilter) {
-                MolecularProfileCasesGroupFilter = molecularProfileCasesGroupFilter;
+                this.molecularProfileCasesGroupFilter = molecularProfileCasesGroupFilter;
     }
 
-    public List<AlterationEnrichmentEventType> getAlterationEnrichmentEventTypes() {
-        return AlterationEnrichmentEventTypes;
+    public AlterationEventTypeFilter getAlterationEventTypes() {
+        return this.alterationEventTypes;
     }
 
-    public void setAlterationEnrichmentEventTypes(
-            List<AlterationEnrichmentEventType> alterationEnrichmentEventTypes) {
-                AlterationEnrichmentEventTypes = alterationEnrichmentEventTypes;
+    public void setAlterationEventTypes(AlterationEventTypeFilter alterationEventTypes) {
+        this.alterationEventTypes = alterationEventTypes;
     }
-
 }
