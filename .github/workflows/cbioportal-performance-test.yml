@@ -24,20 +24,20 @@ jobs:
           context: .
           dockerfile: docker/web/Dockerfile
           pull_image_and_stages: false
-      #- name: Set context for kubectl cluster
-      #  uses: azure/k8s-set-context@v1
-      #  with:
-      #    method: service-account
-      #    k8s-url: ${{ secrets.K8S_URL }}
-      #    k8s-secret: ${{ secrets.K8S_SECRET }}
-      #  id: setcontext
-      #- name: Deploy to kubernetes
-      #  uses: jtalk/k8s-deploy@v2
-      #  with:
-      #  manifests: |
-      #    .github/k8s/cbioportal_performance_test.yaml
-      #  images: 'cbioportal/cbioportal:${{ steps.extract_tags.outputs.image_tag }}'
-      #  kubectl-version: '1.14.0'
+      - name: Set context for kubectl cluster
+        uses: azure/k8s-set-context@v1
+        with:
+          method: service-account
+          k8s-url: ${{ secrets.K8S_URL }}
+          k8s-secret: ${{ secrets.K8S_SECRET }}
+        id: setcontext
+      - name: Deploy to kubernetes
+        uses: jtalk/k8s-deploy@v2
+        with:
+          manifests: |
+            .github/k8s/cbioportal_performance_test.yaml
+          images: 'cbioportalpipelines/cbioportal:${{ steps.extract_tags.outputs.image_tag }}'
+          kubectl-version: '1.14.0'
       - name: DELETE request to dockerhub
         env:
           MAX_WAIT_TIME_IN_SECONDS: 300
