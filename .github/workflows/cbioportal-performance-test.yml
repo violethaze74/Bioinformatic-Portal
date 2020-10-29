@@ -52,7 +52,7 @@ jobs:
           JWT_TOKEN_SECRET="`curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${{ secrets.DOCKER_USERNAME_PIPELINES }}'", "password": "${{ secrets.DOCKER_PASSWORD_PIPELINES }}"}' https://hub.docker.com/v2/users/login/ | sed 's/.*token": "//' | sed 's/"}//'`"
           echo ${JWT_TOKEN_SECRET}
           
-          echo "curl --max-time $MAX_WAIT_TIME_IN_SECONDS -s -o /dev/null -w '%{http_code}' -X DELETE -H 'Authorization: JWT ${JWT_TOKEN_SECRET}' "$URL'
+          echo "curl --max-time $MAX_WAIT_TIME_IN_SECONDS -s -o /dev/null -w '%{http_code}' -X DELETE -H 'Authorization: JWT ${JWT_TOKEN_SECRET}' '$URL'"
           
           curl --max-time $MAX_WAIT_TIME_IN_SECONDS -s -o /dev/null -w "%{http_code}" -X DELETE -H "Authorization: JWT ${JWT_TOKEN_SECRET}" "$URL" > curl.out
           RESPONSE_CODE=`cat curl.out`
