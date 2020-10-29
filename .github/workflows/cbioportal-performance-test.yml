@@ -21,7 +21,7 @@ jobs:
           password: "${{ secrets.DOCKER_PASSWORD }}"
           image_name: cbioportal/cbioportal, keeping this commented out to not spam the actual dockerhub repo
           #image_name: mandaewilson/cbioportal
-          image_tag: cbioportal-performance-test-${{ steps.extract_tags.outputs.image_tag }}
+          image_tag: ${{ steps.extract_tags.outputs.image_tag }}
           context: .
           dockerfile: docker/web/Dockerfile
           pull_image_and_stages: false
