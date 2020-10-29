@@ -53,7 +53,7 @@ jobs:
         run: |
           JWT_TOKEN_SECRET=`curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${DOCKER_USERNAME}'", "password": "'${DOCKER_PASSWORD}'"}' https://hub.docker.com/v2/users/login/ | sed 's/.*token": "//' | sed 's/"}//'`
 
-          curl --max-time $MAX_WAIT_TIME_IN_SECONDS -s -o /dev/null -w "%{http_code}" -X DELETE -H "Authorization: JWT $JWT_TOKEN_SECRET" "$URL" > curl.out
+          curl --max-time $MAX_WAIT_TIME_IN_SECONDS -s -o /dev/null -w "%{http_code}" -X DELETE -H "Authorization: JWT ${JWT_TOKEN_SECRET}" "$URL" > curl.out
           RESPONSE_CODE=`cat curl.out`
           if [ "$RESPONSE_CODE" != "$OK_RESPONSE_CODE" ]; then
             echo "Request failed with response code '$RESPONSE_CODE', expected '$OK_RESPONSE_CODE'"
