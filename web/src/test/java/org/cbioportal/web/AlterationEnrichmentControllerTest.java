@@ -1,13 +1,9 @@
 package org.cbioportal.web;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.cbioportal.model.*;
+import org.cbioportal.model.util.Select;
 import org.cbioportal.service.AlterationEnrichmentService;
-import org.cbioportal.service.impl.AlterationEnrichmentServiceImpl;
 import org.cbioportal.web.parameter.AlterationEventTypeFilter;
 import org.cbioportal.web.parameter.MolecularProfileCasesGroupAndAlterationTypeFilter;
 import org.cbioportal.web.parameter.MolecularProfileCasesGroupFilter;
@@ -29,7 +25,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
@@ -139,8 +137,8 @@ public class AlterationEnrichmentControllerTest {
 
         when(alterationEnrichmentService.getAlterationEnrichments(
             anyMap(),
-            anyList(), // <-- !
-            anyList(), // <-- !
+            any(Select.class), // <-- !
+            any(Select.class), // <-- !
             any(),
             anyBoolean(),
             anyBoolean(),
@@ -179,8 +177,8 @@ public class AlterationEnrichmentControllerTest {
 
         when(alterationEnrichmentService.getAlterationEnrichments(
             anyMap(),
-            isNull(), // <-- !
-            isNull(), // <-- !
+            any(Select.class), // <-- !
+            any(Select.class), // <-- !
             any(),
             anyBoolean(),
             anyBoolean(),
@@ -222,8 +220,8 @@ public class AlterationEnrichmentControllerTest {
 
         when(alterationEnrichmentService.getAlterationEnrichments(
             anyMap(),
-            isNull(), // <-- !
-            anyList(), // <-- !
+            any(Select.class), // <-- !
+            any(Select.class), // <-- !
             any(),
             anyBoolean(),
             anyBoolean(),
@@ -264,8 +262,8 @@ public class AlterationEnrichmentControllerTest {
 
         when(alterationEnrichmentService.getAlterationEnrichments(
             anyMap(),
-            anyList(), // <-- !
-            isNull(), // <-- !
+            any(Select.class), // <-- !
+            any(Select.class), // <-- !
             any(),
             anyBoolean(),
             anyBoolean(),
