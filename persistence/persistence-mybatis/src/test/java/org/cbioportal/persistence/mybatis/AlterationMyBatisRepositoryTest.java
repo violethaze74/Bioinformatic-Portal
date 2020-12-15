@@ -83,12 +83,9 @@ public class AlterationMyBatisRepositoryTest {
     @Test
     public void getSampleMutationCount() throws Exception {
 
-        boolean excludeVUS = false;
-        boolean excludeGermline = false;
-        List<String> tiers = new ArrayList<>();
         cnaEventTypes = Select.none();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
+            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
 
         Assert.assertEquals(3, result.size());
         AlterationCountByGene result672 = result.stream().filter(r -> r.getEntrezGeneId() == 672).findFirst().get();
@@ -105,12 +102,9 @@ public class AlterationMyBatisRepositoryTest {
     @Test
     public void getSampleCnaCount() throws Exception {
 
-        boolean excludeVUS = false;
-        boolean excludeGermline = false;
-        List<String> tiers = new ArrayList<>();
         mutationEventTypes = Select.none();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
+            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
 
         Assert.assertEquals(2, result.size());
         AlterationCountByGene result207 = result.stream().filter(r -> r.getEntrezGeneId() == 207).findFirst().get();
@@ -124,11 +118,8 @@ public class AlterationMyBatisRepositoryTest {
     @Test
     public void getSampleMutationAndCnaCount() throws Exception {
 
-        boolean excludeVUS = false;
-        boolean excludeGermline = false;
-        List<String> tiers = new ArrayList<>();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
+            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
 
         Assert.assertEquals(3, result.size());
         AlterationCountByGene result672 = result.stream().filter(r -> r.getEntrezGeneId() == 672).findFirst().get();
@@ -143,84 +134,23 @@ public class AlterationMyBatisRepositoryTest {
     }
 
     @Test
-    public void getSampleMutationCountFilterGermline() throws Exception {
-
-        boolean excludeVUS = false;
-        boolean excludeGermline = true;
-        List<String> tiers = new ArrayList<>();
-        cnaEventTypes = Select.none();
-        List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
-        // all mutations in testSql.sql are Germline mutations
-        Assert.assertEquals(0, result.size());
-    }
-
-
-    @Test
     public void getSampleMutationCountFilterFusions() throws Exception {
 
         searchFusions = true;
-        boolean excludeVUS = false;
-        boolean excludeGermline = false;
-        List<String> tiers = new ArrayList<>();
+
         cnaEventTypes = Select.none();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
+            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
         // there are no fusion mutations in the test db
         Assert.assertEquals(0, result.size());
     }
 
-    // TODO discuss, when mutation types is null, no cna counts will be returned. Alternatively, all mutation types
-    // could be returned. This would speed up the query.
-    @Test
-    public void getSampleCountFilterVus() throws Exception {
-
-        boolean excludeVUS = true;
-        boolean excludeGermline = false;
-        List<String> tiers = new ArrayList<>();
-        List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
-
-        Assert.assertEquals(2, result.size());
-        AlterationCountByGene result672 = result.stream().filter(r -> r.getEntrezGeneId() == 672).findFirst().get();
-        AlterationCountByGene result207 = result.stream().filter(r -> r.getEntrezGeneId() == 207).findFirst().get();
-        Assert.assertEquals((Integer) 3, result672.getNumberOfAlterations());
-        Assert.assertEquals((Integer) 3, result672.getNumberOfAlteredCases());
-        Assert.assertEquals((Integer) 2, result207.getNumberOfAlterations());
-        Assert.assertEquals((Integer) 1, result207.getNumberOfAlteredCases());
-    }
-
-    @Test
-    public void getSampleCountForceTiers() throws Exception {
-
-        // All 'Tier 2' tiers are forced to be interpreted as driver events
-
-        boolean excludeVUS = true;
-        boolean excludeGermline = false;
-        List<String> tiers = new ArrayList<>();
-        tiers.add("Tier 2");
-        List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
-
-        Assert.assertEquals(2, result.size());
-        AlterationCountByGene result672 = result.stream().filter(r -> r.getEntrezGeneId() == 672).findFirst().get();
-        AlterationCountByGene result207 = result.stream().filter(r -> r.getEntrezGeneId() == 207).findFirst().get();
-        Assert.assertEquals((Integer) 4, result672.getNumberOfAlterations());
-        Assert.assertEquals((Integer) 3, result672.getNumberOfAlteredCases());
-        Assert.assertEquals((Integer) 4, result207.getNumberOfAlterations());
-        Assert.assertEquals((Integer) 2, result207.getNumberOfAlteredCases());
-    }
-
-
     @Test
     public void getPatientMutationCount() throws Exception {
 
-        boolean excludeVUS = false;
-        boolean excludeGermline = false;
-        List<String> tiers = new ArrayList<>();
         cnaEventTypes = Select.none();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getPatientAlterationCounts(
-            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
+            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
 
         // For testSql.sql there are no more samples per patient for the investigated genes.
         // Therefore, patient level counts are the same as the sample level counts.
@@ -239,12 +169,9 @@ public class AlterationMyBatisRepositoryTest {
     @Test
     public void getPatientCnaCount() throws Exception {
 
-        boolean excludeVUS = false;
-        boolean excludeGermline = false;
-        List<String> tiers = new ArrayList<>();
         mutationEventTypes = Select.none();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getPatientAlterationCounts(
-            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
+            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
 
         // For testSql.sql there are no more samples per patient for the investigated genes.
         // Therefore, patient level counts are the same as the sample level counts.
@@ -260,11 +187,8 @@ public class AlterationMyBatisRepositoryTest {
     @Test
     public void getPatientMutationAndCnaCount() throws Exception {
 
-        boolean excludeVUS = false;
-        boolean excludeGermline = false;
-        List<String> tiers = new ArrayList<>();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getPatientAlterationCounts(
-            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
+            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
 
         // For testSql.sql there are no more samples per patient for the investigated genes.
         // Therefore, patient level counts are the same as the sample level counts.
@@ -280,85 +204,24 @@ public class AlterationMyBatisRepositoryTest {
         Assert.assertEquals((Integer) 2, result208.getNumberOfAlteredCases());
     }
 
-
-    @Test
-    public void getPatientMutationCountFilterGermline() throws Exception {
-
-        boolean excludeVUS = false;
-        boolean excludeGermline = true;
-        List<String> tiers = new ArrayList<>();
-        cnaEventTypes = Select.none();
-        List<AlterationCountByGene> result = alterationMyBatisRepository.getPatientAlterationCounts(
-            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
-        // all mutations in testSql.sql are Germline mutations
-        Assert.assertEquals(0, result.size());
-    }
-
-
     @Test
     public void getPatientMutationCountFilterFusions() throws Exception {
 
         searchFusions = true;
-        boolean excludeVUS = false;
-        boolean excludeGermline = false;
-        List<String> tiers = new ArrayList<>();
         cnaEventTypes = Select.none();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getPatientAlterationCounts(
-            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
+            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
         // there are no fusion mutations in the test db
         Assert.assertEquals(0, result.size());
-    }
-
-    // TODO discuss, when mutation types is null, no cna counts will be returned. Alternatively, all mutation types
-    // could be returned. This would speed up the query.
-    @Test
-    public void getPatientCountFilterVus() throws Exception {
-
-        boolean excludeVUS = true;
-        boolean excludeGermline = false;
-        List<String> tiers = new ArrayList<>();
-        List<AlterationCountByGene> result = alterationMyBatisRepository.getPatientAlterationCounts(
-            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
-
-        Assert.assertEquals(2, result.size());
-        AlterationCountByGene result672 = result.stream().filter(r -> r.getEntrezGeneId() == 672).findFirst().get();
-        AlterationCountByGene result207 = result.stream().filter(r -> r.getEntrezGeneId() == 207).findFirst().get();
-        Assert.assertEquals((Integer) 3, result672.getNumberOfAlterations());
-        Assert.assertEquals((Integer) 3, result672.getNumberOfAlteredCases());
-        Assert.assertEquals((Integer) 2, result207.getNumberOfAlterations());
-        Assert.assertEquals((Integer) 1, result207.getNumberOfAlteredCases());
-    }
-
-    @Test
-    public void getPatientCountForceTiers() throws Exception {
-
-        // All 'Tier 2' tiers are forced to be interpreted as driver events
-
-        boolean excludeVUS = true;
-        boolean excludeGermline = false;
-        List<String> tiers = new ArrayList<>();
-        tiers.add("Tier 2");
-        List<AlterationCountByGene> result = alterationMyBatisRepository.getPatientAlterationCounts(
-            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
-
-        Assert.assertEquals(2, result.size());
-        AlterationCountByGene result672 = result.stream().filter(r -> r.getEntrezGeneId() == 672).findFirst().get();
-        AlterationCountByGene result207 = result.stream().filter(r -> r.getEntrezGeneId() == 207).findFirst().get();
-        Assert.assertEquals((Integer) 4, result672.getNumberOfAlterations());
-        Assert.assertEquals((Integer) 3, result672.getNumberOfAlteredCases());
-        Assert.assertEquals((Integer) 4, result207.getNumberOfAlterations());
-        Assert.assertEquals((Integer) 2, result207.getNumberOfAlteredCases());
     }
 
     @Test
     public void getSampleCnaCountLegacy() throws Exception {
 
-        boolean excludeVUS = false;
-        List<String> tiers = new ArrayList<>();
         // FIXME: whole CNA dedicated endpoint should be removed
         entrezGeneIds = null; // only way it works; otherwise it tries to pair up geneids with alteration types with
         List<CopyNumberCountByGene> result = alterationMyBatisRepository.getSampleCnaCounts(
-            sampleIdToProfileId, entrezGeneIds, cnaEventTypes, excludeVUS, tiers);
+            sampleIdToProfileId, entrezGeneIds, cnaEventTypes);
 
         Assert.assertEquals(3, result.size());
         AlterationCountByGene result207up = result.stream().filter(r -> r.getEntrezGeneId() == 207 && r.getAlteration() == 2).findFirst().get();
@@ -372,12 +235,10 @@ public class AlterationMyBatisRepositoryTest {
     @Test
     public void getPatientCnaCountLegacy() throws Exception {
 
-        boolean excludeVUS = false;
-        List<String> tiers = new ArrayList<>();
         // FIXME: whole CNA dedicated endpoint should be removed
         entrezGeneIds = null; // only way it works; otherwise it tries to pair up geneids with alteration types with
         List<CopyNumberCountByGene> result = alterationMyBatisRepository.getPatientCnaCounts(
-            patientIdToProfileId, entrezGeneIds, cnaEventTypes, excludeVUS, tiers);
+            patientIdToProfileId, entrezGeneIds, cnaEventTypes);
 
         // For testSql.sql there are no more samples per patient for the investigated genes.
         // Therefore, patient level counts are the same as the sample level counts.
@@ -393,13 +254,10 @@ public class AlterationMyBatisRepositoryTest {
     @Test
     public void getSampleAlterationCountsReturnsZeroForMutationsAndCnaSelectorsInNone() {
 
-        boolean excludeVUS = false;
-        boolean excludeGermline = false;
-        List<String> tiers = Collections.emptyList();
         mutationEventTypes = Select.none();
         cnaEventTypes = Select.none();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
+            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
 
         Assert.assertEquals(0, result.size());
     }
@@ -407,13 +265,10 @@ public class AlterationMyBatisRepositoryTest {
     @Test
     public void getSampleAlterationCountsReturnsAllForMutationsAndCnaSelectorsInAll() {
 
-        boolean excludeVUS = false;
-        boolean excludeGermline = false;
-        List<String> tiers = Collections.emptyList();
         mutationEventTypes = Select.all();
         cnaEventTypes = Select.all();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, excludeVUS, tiers, excludeGermline);
+            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
 
         Assert.assertEquals(3, result.size());
     }

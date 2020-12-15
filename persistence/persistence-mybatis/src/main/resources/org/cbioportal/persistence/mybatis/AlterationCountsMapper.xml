@@ -20,7 +20,6 @@
             FROM mutation_event
             INNER JOIN mutation ON mutation_event.MUTATION_EVENT_ID = mutation.MUTATION_EVENT_ID
             INNER JOIN gene ON mutation_event.ENTREZ_GENE_ID = gene.ENTREZ_GENE_ID
-            <include refid="fromExcludeVusAlterationsMutation"/>
             <where>
                 <if test="!mutationTypes.hasAll()">
                     <choose>
@@ -34,8 +33,6 @@
                     </choose>
                 </if>
                 <include refid="whereSearchFusions"/>
-                <include refid="whereExcludeGermlineAlterations"/>
-                <include refid="whereExcludeVusAlterations"/>
             </where>
             UNION
             SELECT
@@ -47,7 +44,6 @@
             FROM cna_event
             INNER JOIN sample_cna_event ON cna_event.CNA_EVENT_ID = sample_cna_event.CNA_EVENT_ID
             INNER JOIN gene ON cna_event.ENTREZ_GENE_ID = gene.ENTREZ_GENE_ID
-            <include refid="fromExcludeVusAlterationsCna"/>
             <where>
                 <if test="!cnaTypes.hasAll()">
                     <choose>
@@ -60,7 +56,6 @@
                         </otherwise>
                     </choose>
                 </if>
-                <include refid="whereExcludeVusAlterations"/>
             </where>
         ) as JoinedTable
         <where>
@@ -92,7 +87,6 @@
             INNER JOIN genetic_profile on sample_profile.GENETIC_PROFILE_ID = genetic_profile.GENETIC_PROFILE_ID
             INNER JOIN sample ON sample_profile.SAMPLE_ID = sample.INTERNAL_ID
             INNER JOIN patient ON sample.PATIENT_ID = patient.INTERNAL_ID
-            <include refid="fromExcludeVusAlterationsMutation"/>
             <where>
                 <if test="!mutationTypes.hasAll()">
                     <choose>
@@ -106,8 +100,6 @@
                     </choose>
                 </if>
                 <include refid="whereSearchFusions"/>
-                <include refid="whereExcludeGermlineAlterations"/>
-                <include refid="whereExcludeVusAlterations"/>
             </where>
             UNION
             SELECT
@@ -121,7 +113,6 @@
             INNER JOIN genetic_profile on sample_cna_event.GENETIC_PROFILE_ID = genetic_profile.GENETIC_PROFILE_ID
             INNER JOIN sample ON sample_cna_event.SAMPLE_ID = sample.INTERNAL_ID
             INNER JOIN patient ON sample.PATIENT_ID = patient.INTERNAL_ID
-            <include refid="fromExcludeVusAlterationsCna"/>
             <where>
                 <if test="!cnaTypes.hasAll()">
                     <choose>
@@ -134,7 +125,6 @@
                         </otherwise>
                     </choose>
                 </if>
-                <include refid="whereExcludeVusAlterations"/>
             </where>
         ) as JoinedTable
         <where>
@@ -153,7 +143,6 @@
             COUNT(DISTINCT(sample_cna_event.SAMPLE_ID)) AS numberOfAlteredCases
         FROM cna_event
         INNER JOIN sample_cna_event ON cna_event.CNA_EVENT_ID = sample_cna_event.CNA_EVENT_ID
-        <include refid="fromExcludeVusAlterationsCna"/>
         INNER JOIN genetic_profile ON sample_cna_event.GENETIC_PROFILE_ID = genetic_profile.GENETIC_PROFILE_ID
         INNER JOIN gene ON cna_event.ENTREZ_GENE_ID = gene.ENTREZ_GENE_ID
         INNER JOIN cancer_study ON cancer_study.CANCER_STUDY_ID = genetic_profile.CANCER_STUDY_ID
@@ -201,7 +190,6 @@
                 #{cnaType}
             </foreach>
         </if>
-        <include refid="whereExcludeVusAlterations"/>
         GROUP BY cna_event.ENTREZ_GENE_ID, cna_event.ALTERATION, reference_genome_gene.CYTOBAND, gene.HUGO_GENE_SYMBOL
     </select>
 
@@ -212,7 +200,6 @@
             cna_event.ALTERATION AS alteration,
             COUNT(DISTINCT(patient.INTERNAL_ID)) AS numberOfAlteredCases
         FROM cna_event
-        <include refid="org.cbioportal.persistence.mybatis.AlterationCountsMapper.fromExcludeVusAlterationsCna"/>
         INNER JOIN sample_cna_event ON cna_event.CNA_EVENT_ID = sample_cna_event.CNA_EVENT_ID
         INNER JOIN genetic_profile ON sample_cna_event.GENETIC_PROFILE_ID = genetic_profile.GENETIC_PROFILE_ID
         INNER JOIN sample ON sample_cna_event.SAMPLE_ID = sample.INTERNAL_ID
@@ -263,48 +250,8 @@
                 #{cnaType}
             </foreach>
         </if>
-        <include refid="whereExcludeVusAlterations"/>
         GROUP BY cna_event.ENTREZ_GENE_ID, cna_event.ALTERATION, gene.HUGO_GENE_SYMBOL
     </select>
-
-    <sql id="fromExcludeVusAlterationsMutation">
-        <if test="excludeVUS">
-            LEFT JOIN alteration_driver_annotation ON
-            mutation.MUTATION_EVENT_ID = alteration_driver_annotation.ALTERATION_EVENT_ID
-            AND mutation.GENETIC_PROFILE_ID = alteration_driver_annotation.GENETIC_PROFILE_ID
-            AND mutation.SAMPLE_ID = alteration_driver_annotation.SAMPLE_ID
-        </if>
-    </sql>
-
-    <sql id="fromExcludeVusAlterationsCna">
-        <if test="excludeVUS">
-            LEFT JOIN alteration_driver_annotation ON
-            sample_cna_event.CNA_EVENT_ID = alteration_driver_annotation.ALTERATION_EVENT_ID
-            AND sample_cna_event.GENETIC_PROFILE_ID = alteration_driver_annotation.GENETIC_PROFILE_ID
-            AND sample_cna_event.SAMPLE_ID = alteration_driver_annotation.SAMPLE_ID
-        </if>
-    </sql>
-
-    <sql id="whereExcludeVusAlterations">
-        <if test="excludeVUS">
-            AND
-            alteration_driver_annotation.DRIVER_FILTER = 'Putative_Driver'
-            <if test="selectedTiers != null and !selectedTiers.isEmpty()">
-                OR
-                alteration_driver_annotation.DRIVER_TIERS_FILTER IN
-                <foreach item="item" collection="selectedTiers" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </if>
-        </if>
-    </sql>
-
-    <sql id="whereExcludeGermlineAlterations">
-        <if test="excludeGermline">
-            AND
-            mutation.MUTATION_STATUS != 'Germline'
-        </if>
-    </sql>
 
     <sql id="whereSearchFusions">
         <if test="searchFusions">

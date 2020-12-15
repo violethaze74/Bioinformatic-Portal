@@ -64,7 +64,7 @@ public class AlterationEnrichmentServiceImplTest extends BaseServiceImplTest {
                 groupMolecularProfileCaseSets.get(molecularProfileId),
                 null, false, true,
                 mutationTypes, cnaTypes,
-                false, false, null, false)
+                false)
             ).thenReturn(alterationSampleCountByGeneList);
         }
 
@@ -78,9 +78,6 @@ public class AlterationEnrichmentServiceImplTest extends BaseServiceImplTest {
                 mutationTypes,
                 cnaTypes,
                 EnrichmentScope.SAMPLE,
-                false,
-                false,
-                null,
                 false);
         Assert.assertEquals(result, expectedAlterationEnrichments);
     }

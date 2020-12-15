@@ -22,10 +22,7 @@ public class AlterationMyBatisRepository implements AlterationRepository {
                                                                  List<Integer> entrezGeneIds,
                                                                  final Select<MutationEventType> mutationEventTypes,
                                                                  final Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                                 boolean searchFusions,
-                                                                 boolean excludeVUS,
-                                                                 List<String> selectedTiers,
-                                                                 boolean excludeGermline) {
+                                                                 boolean searchFusions) {
 
         if (mutationEventTypes.hasNone() && cnaEventTypes.hasNone()) {
             return Collections.emptyList();
@@ -39,10 +36,7 @@ public class AlterationMyBatisRepository implements AlterationRepository {
             entrezGeneIds,
             createMutationTypeList(mutationEventTypes),
             createCnaTypeList(cnaEventTypes),
-            searchFusions,
-            excludeVUS,
-            selectedTiers,
-            excludeGermline);
+            searchFusions);
     }
 
     @Override
@@ -50,10 +44,7 @@ public class AlterationMyBatisRepository implements AlterationRepository {
                                                                   List<Integer> entrezGeneIds,
                                                                   Select<MutationEventType> mutationEventTypes,
                                                                   Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                                  boolean searchFusions,
-                                                                  boolean excludeVUS,
-                                                                  List<String> selectedTiers,
-                                                                  boolean excludeGermline) {
+                                                                  boolean searchFusions) {
 
         if (mutationEventTypes.hasNone() && cnaEventTypes.hasNone()) {
             return Collections.emptyList();
@@ -67,18 +58,13 @@ public class AlterationMyBatisRepository implements AlterationRepository {
             entrezGeneIds,
             createMutationTypeList(mutationEventTypes),
             createCnaTypeList(cnaEventTypes),
-            searchFusions,
-            excludeVUS,
-            selectedTiers,
-            excludeGermline);
+            searchFusions);
     }
 
     @Override
     public List<CopyNumberCountByGene> getSampleCnaCounts(List<MolecularProfileCaseIdentifier> molecularProfileCaseIdentifiers,
                                                           List<Integer> entrezGeneIds,
-                                                          Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                          boolean excludeVUS,
-                                                          List<String> selectedTiers) {
+                                                          Select<CopyNumberAlterationEventType> cnaEventTypes) {
 
 
         if (cnaEventTypes.hasNone()) {
@@ -91,17 +77,13 @@ public class AlterationMyBatisRepository implements AlterationRepository {
             caseIdToProfileIdArrays.getLeft(),
             caseIdToProfileIdArrays.getRight(),
             entrezGeneIds,
-            createCnaTypeList(cnaEventTypes),
-            excludeVUS,
-            selectedTiers);
+            createCnaTypeList(cnaEventTypes));
     }
 
     @Override
     public List<CopyNumberCountByGene> getPatientCnaCounts(List<MolecularProfileCaseIdentifier> molecularProfileCaseIdentifiers,
                                                            List<Integer> entrezGeneIds,
-                                                           Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                           boolean excludeVUS,
-                                                           List<String> selectedTiers) {
+                                                           Select<CopyNumberAlterationEventType> cnaEventTypes) {
 
         if (cnaEventTypes.hasNone()) {
             return Collections.emptyList();
@@ -113,9 +95,7 @@ public class AlterationMyBatisRepository implements AlterationRepository {
             caseIdToProfileIdArrays.getLeft(),
             caseIdToProfileIdArrays.getRight(),
             entrezGeneIds,
-            createCnaTypeList(cnaEventTypes),
-            excludeVUS,
-            selectedTiers);
+            createCnaTypeList(cnaEventTypes));
     }
 
 

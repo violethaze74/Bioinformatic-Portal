@@ -14,9 +14,6 @@ public interface AlterationEnrichmentService {
         final Select<MutationEventType> mutationEventTypes,
         final Select<CopyNumberAlterationEventType> cnaEventTypes,
         EnrichmentScope enrichmentScope,
-        boolean searchFusions,
-        boolean exludeVUS,
-        List<String> selectedTiers,
-        boolean excludeGermline)
+        boolean searchFusions)
         throws MolecularProfileNotFoundException;
 }

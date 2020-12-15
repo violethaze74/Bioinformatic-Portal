@@ -23,10 +23,10 @@ public class AlterationEnrichmentServiceImpl implements AlterationEnrichmentServ
     @Override
     public List<AlterationEnrichment> getAlterationEnrichments(
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets, final Select<MutationEventType> mutationEventTypes,
-        final Select<CopyNumberAlterationEventType> cnaEventTypes, EnrichmentScope enrichmentScope, boolean searchFusions, boolean excludeVUS, List<String> selectedTiers, boolean excludeGermline) {
+        final Select<CopyNumberAlterationEventType> cnaEventTypes, EnrichmentScope enrichmentScope, boolean searchFusions) {
 
         Map<String, List<AlterationCountByGene>> alterationCountsbyEntrezGeneIdAndGroup = getAlterationCountsbyEntrezGeneIdAndGroup(
-            molecularProfileCaseSets, mutationEventTypes, cnaEventTypes, enrichmentScope, searchFusions, excludeVUS, selectedTiers, excludeGermline);
+            molecularProfileCaseSets, mutationEventTypes, cnaEventTypes, enrichmentScope, searchFusions);
 
         return alterationEnrichmentUtil.createAlterationEnrichments(alterationCountsbyEntrezGeneIdAndGroup,
                 molecularProfileCaseSets);
@@ -37,10 +37,7 @@ public class AlterationEnrichmentServiceImpl implements AlterationEnrichmentServ
         Select<MutationEventType> mutationEventTypes,
         Select<CopyNumberAlterationEventType> cnaEventTypes,
         EnrichmentScope enrichmentType,
-        boolean searchFusions,
-        boolean exludeVUS,
-        List<String> selectedTiers,
-        boolean excludeGermline) {
+        boolean searchFusions) {
         return molecularProfileCaseSets
             .entrySet()
             .stream()
@@ -57,10 +54,7 @@ public class AlterationEnrichmentServiceImpl implements AlterationEnrichmentServ
                                 true,
                                 mutationEventTypes,
                                 cnaEventTypes,
-                                searchFusions,
-                                exludeVUS,
-                                selectedTiers,
-                                excludeGermline);
+                                searchFusions);
                     } else {
                         return alterationCountService
                             .getPatientAlterationCounts(
@@ -70,10 +64,7 @@ public class AlterationEnrichmentServiceImpl implements AlterationEnrichmentServ
                                 true,
                                 mutationEventTypes,
                                 cnaEventTypes,
-                                searchFusions,
-                                exludeVUS,
-                                selectedTiers,
-                                excludeGermline);
+                                searchFusions);
                     }
                 }));
     }

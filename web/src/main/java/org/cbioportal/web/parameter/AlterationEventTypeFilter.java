@@ -4,25 +4,27 @@ import org.cbioportal.model.CopyNumberAlterationEventType;
 import org.cbioportal.model.MutationEventType;
 
 import java.util.List;
+import java.util.Map;
 
 public class AlterationEventTypeFilter {
     
-    private List<MutationEventType> mutationEventTypes;
-    private List<CopyNumberAlterationEventType> copyNumberAlterationEventTypes;
+    private Map<MutationEventType, Boolean> mutationEventTypes;
+    private Map<CopyNumberAlterationEventType, Boolean> copyNumberAlterationEventTypes;
 
-    public List<MutationEventType> getMutationEventTypes() {
+    public Map<MutationEventType, Boolean> getMutationEventTypes() {
         return mutationEventTypes;
     }
 
-    public void setMutationEventTypes(List<MutationEventType> mutationEventTypes) {
+    public void setMutationEventTypes(Map<MutationEventType, Boolean> mutationEventTypes) {
         this.mutationEventTypes = mutationEventTypes;
     }
 
-    public List<CopyNumberAlterationEventType> getCopyNumberAlterationEventTypes() {
+    public Map<CopyNumberAlterationEventType, Boolean> getCopyNumberAlterationEventTypes() {
         return copyNumberAlterationEventTypes;
     }
 
-    public void setCopyNumberAlterationEventTypes(List<CopyNumberAlterationEventType> copyNumberAlterationEventTypes) {
+    public void setCopyNumberAlterationEventTypes(Map<CopyNumberAlterationEventType, Boolean> copyNumberAlterationEventTypes) {
         this.copyNumberAlterationEventTypes = copyNumberAlterationEventTypes;
     }
+    
 }

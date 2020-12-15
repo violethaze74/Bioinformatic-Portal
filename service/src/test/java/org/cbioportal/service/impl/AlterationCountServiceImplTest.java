@@ -56,11 +56,7 @@ public class AlterationCountServiceImplTest extends BaseServiceImplTest {
             entrezGeneIds,
             mutationEventTypes,
             cnaEventTypes,
-            searchFusions,
-            excludeVUS,
-            tiers,
-            excludeGermline
-        )).thenReturn(expectedCountByGeneList);
+            searchFusions)).thenReturn(expectedCountByGeneList);
 
         List<AlterationCountByGene> result = alterationCountService.getSampleAlterationCounts(
             caseIdentifiers,
@@ -69,10 +65,7 @@ public class AlterationCountServiceImplTest extends BaseServiceImplTest {
             includeMissingAlterationsFromGenePanel,
             mutationEventTypes,
             cnaEventTypes,
-            searchFusions,
-            excludeVUS,
-            tiers,
-            excludeGermline);
+            searchFusions);
         
         verify(alterationEnrichmentUtil, times(1)).includeFrequencyForSamples(anyList(), anyList(), anyBoolean());
 
@@ -89,11 +82,7 @@ public class AlterationCountServiceImplTest extends BaseServiceImplTest {
             entrezGeneIds,
             mutationEventTypes,
             cnaEventTypes,
-            searchFusions,
-            excludeVUS,
-            tiers,
-            excludeGermline
-        )).thenReturn(expectedCountByGeneList);
+            searchFusions)).thenReturn(expectedCountByGeneList);
 
         List<AlterationCountByGene> result = alterationCountService.getPatientAlterationCounts(
             caseIdentifiers,
@@ -102,10 +91,7 @@ public class AlterationCountServiceImplTest extends BaseServiceImplTest {
             includeMissingAlterationsFromGenePanel,
             mutationEventTypes,
             cnaEventTypes,
-            searchFusions,
-            excludeVUS,
-            tiers,
-            excludeGermline);
+            searchFusions);
 
         verify(alterationEnrichmentUtil, times(1)).includeFrequencyForPatients(anyList(), anyList(), anyBoolean());
     }
@@ -119,21 +105,14 @@ public class AlterationCountServiceImplTest extends BaseServiceImplTest {
             entrezGeneIds,
             mutationEventTypes,
             Select.none(),
-            searchFusions,
-            excludeVUS,
-            tiers,
-            excludeGermline
-        )).thenReturn(expectedCountByGeneList);
+            searchFusions)).thenReturn(expectedCountByGeneList);
 
         List<AlterationCountByGene> result = alterationCountService.getSampleMutationCounts(
             caseIdentifiers,
             entrezGeneIds,
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
-            mutationEventTypes,
-            excludeVUS,
-            tiers,
-            excludeGermline);
+            mutationEventTypes);
 
         Assert.assertEquals(expectedCountByGeneList, result);
 
@@ -148,21 +127,14 @@ public class AlterationCountServiceImplTest extends BaseServiceImplTest {
             entrezGeneIds,
             mutationEventTypes,
             Select.none(),
-            searchFusions,
-            excludeVUS,
-            tiers,
-            excludeGermline
-        )).thenReturn(expectedCountByGeneList);
+            searchFusions)).thenReturn(expectedCountByGeneList);
 
         List<AlterationCountByGene> result = alterationCountService.getPatientMutationCounts(
             caseIdentifiers,
             entrezGeneIds,
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
-            mutationEventTypes,
-            excludeVUS,
-            tiers,
-            excludeGermline);
+            mutationEventTypes);
 
         Assert.assertEquals(expectedCountByGeneList, result);
 
@@ -179,21 +151,14 @@ public class AlterationCountServiceImplTest extends BaseServiceImplTest {
             entrezGeneIds,
             mutationEventTypes,
             Select.none(),
-            searchFusions,
-            excludeVUS,
-            tiers,
-            excludeGermline
-        )).thenReturn(expectedCountByGeneList);
+            searchFusions)).thenReturn(expectedCountByGeneList);
 
         List<AlterationCountByGene> result = alterationCountService.getSampleFusionCounts(
             caseIdentifiers,
             entrezGeneIds,
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
-            mutationEventTypes,
-            excludeVUS,
-            tiers,
-            excludeGermline);
+            mutationEventTypes);
 
         Assert.assertEquals(expectedCountByGeneList, result);
     }
@@ -209,21 +174,14 @@ public class AlterationCountServiceImplTest extends BaseServiceImplTest {
             entrezGeneIds,
             mutationEventTypes,
             Select.none(),
-            searchFusions,
-            excludeVUS,
-            tiers,
-            excludeGermline
-        )).thenReturn(expectedCountByGeneList);
+            searchFusions)).thenReturn(expectedCountByGeneList);
 
         List<AlterationCountByGene> result = alterationCountService.getPatientFusionCounts(
             caseIdentifiers,
             entrezGeneIds,
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
-            mutationEventTypes,
-            excludeVUS,
-            tiers,
-            excludeGermline);
+            mutationEventTypes);
 
         Assert.assertEquals(expectedCountByGeneList, result);
     }
@@ -237,19 +195,14 @@ public class AlterationCountServiceImplTest extends BaseServiceImplTest {
         when(alterationRepository.getSampleCnaCounts(
             caseIdentifiers,
             entrezGeneIds,
-            cnaEventTypes,
-            excludeVUS,
-            tiers
-        )).thenReturn(expectedCnaCountByGeneList);
+            cnaEventTypes)).thenReturn(expectedCnaCountByGeneList);
 
         List<CopyNumberCountByGene> result = alterationCountService.getSampleCnaCounts(
             caseIdentifiers,
             entrezGeneIds,
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
-            cnaEventTypes,
-            excludeVUS,
-            tiers);
+            cnaEventTypes);
 
         verify(alterationEnrichmentUtilCna, times(1)).includeFrequencyForSamples(anyList(), anyList(), anyBoolean());
         Assert.assertEquals(expectedCnaCountByGeneList, result);
@@ -265,10 +218,7 @@ public class AlterationCountServiceImplTest extends BaseServiceImplTest {
         when(alterationRepository.getPatientCnaCounts(
             caseIdentifiers,
             entrezGeneIds,
-            cnaEventTypes,
-            excludeVUS,
-            tiers
-        )).thenReturn(expectedCnaCountByGeneList);
+            cnaEventTypes)).thenReturn(expectedCnaCountByGeneList);
 
 
         List<CopyNumberCountByGene> result = alterationCountService.getPatientCnaCounts(
@@ -276,9 +226,7 @@ public class AlterationCountServiceImplTest extends BaseServiceImplTest {
             entrezGeneIds,
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
-            cnaEventTypes,
-            excludeVUS,
-            tiers);
+            cnaEventTypes);
 
         verify(alterationEnrichmentUtilCna, times(1)).includeFrequencyForPatients(anyList(), anyList(), anyBoolean());
         Assert.assertEquals(expectedCnaCountByGeneList, result);

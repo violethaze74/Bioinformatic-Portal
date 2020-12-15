@@ -28,6 +28,8 @@ import org.springframework.web.context.WebApplicationContext;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
@@ -124,8 +126,12 @@ public class AlterationEnrichmentControllerTest {
         filter.setMolecularProfileCasesGroupFilter(Arrays.asList(casesGroup1,casesGroup2));
 
         eventTypes = new AlterationEventTypeFilter();
-        eventTypes.setMutationEventTypes(Arrays.asList(MutationEventType.missense_mutation));
-        eventTypes.setCopyNumberAlterationEventTypes(Arrays.asList(CopyNumberAlterationEventType.AMP));
+        Map<MutationEventType, Boolean> mutationEventTypeMap = new HashMap();
+        mutationEventTypeMap.put(MutationEventType.missense_mutation, true);
+        Map<CopyNumberAlterationEventType, Boolean> cnaEventTypeMap = new HashMap();
+        cnaEventTypeMap.put(CopyNumberAlterationEventType.AMP, true);
+        eventTypes.setMutationEventTypes(mutationEventTypeMap);
+        eventTypes.setCopyNumberAlterationEventTypes(cnaEventTypeMap);
         filter.setAlterationEventTypes(eventTypes);
         
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
@@ -137,12 +143,9 @@ public class AlterationEnrichmentControllerTest {
 
         when(alterationEnrichmentService.getAlterationEnrichments(
             anyMap(),
-            any(Select.class), // <-- !
-            any(Select.class), // <-- !
+            any(Select.class),
+            any(Select.class),
             any(),
-            anyBoolean(),
-            anyBoolean(),
-            anyList(),
             anyBoolean()))
             .thenReturn(alterationEnrichments);
         
@@ -173,21 +176,18 @@ public class AlterationEnrichmentControllerTest {
     }
 
     @Test
-    public void fetchAlterationEnrichmentsNullTypes() throws Exception {
+    public void fetchAlterationEnrichmentsAllTypes() throws Exception {
 
         when(alterationEnrichmentService.getAlterationEnrichments(
             anyMap(),
-            any(Select.class), // <-- !
-            any(Select.class), // <-- !
+            any(Select.class),
+            any(Select.class),
             any(),
-            anyBoolean(),
-            anyBoolean(),
-            anyList(),
             anyBoolean()))
             .thenReturn(alterationEnrichments);
         
-        filter.getAlterationEventTypes().setMutationEventTypes(null);
-        filter.getAlterationEventTypes().setCopyNumberAlterationEventTypes(null);
+        filter.getAlterationEventTypes().getMutationEventTypes().put(MutationEventType.missense_mutation, false);
+        filter.getAlterationEventTypes().getCopyNumberAlterationEventTypes().put(CopyNumberAlterationEventType.AMP, false);
 
         mockMvc.perform(MockMvcRequestBuilders.post(
             "/alteration-enrichments/fetch")
@@ -220,16 +220,13 @@ public class AlterationEnrichmentControllerTest {
 
         when(alterationEnrichmentService.getAlterationEnrichments(
             anyMap(),
-            any(Select.class), // <-- !
-            any(Select.class), // <-- !
+            any(Select.class),
+            any(Select.class),
             any(),
-            anyBoolean(),
-            anyBoolean(),
-            anyList(),
             anyBoolean()))
             .thenReturn(alterationEnrichments);
 
-        filter.getAlterationEventTypes().setMutationEventTypes(null);
+        filter.getAlterationEventTypes().getMutationEventTypes().put(MutationEventType.missense_mutation, false);
 
         mockMvc.perform(MockMvcRequestBuilders.post(
             "/alteration-enrichments/fetch")
@@ -262,16 +259,13 @@ public class AlterationEnrichmentControllerTest {
 
         when(alterationEnrichmentService.getAlterationEnrichments(
             anyMap(),
-            any(Select.class), // <-- !
-            any(Select.class), // <-- !
+            any(Select.class),
+            any(Select.class),
             any(),
-            anyBoolean(),
-            anyBoolean(),
-            anyList(),
             anyBoolean()))
             .thenReturn(alterationEnrichments);
 
-        filter.getAlterationEventTypes().setCopyNumberAlterationEventTypes(null);
+        filter.getAlterationEventTypes().getCopyNumberAlterationEventTypes().put(CopyNumberAlterationEventType.AMP, false);
 
         mockMvc.perform(MockMvcRequestBuilders.post(
             "/alteration-enrichments/fetch")

@@ -73,18 +73,14 @@ public class CopyNumberEnrichmentServiceImpl implements CopyNumberEnrichmentServ
                             null,
                             true,
                             true,
-                            cnaTypes,
-                            exludeVUS,
-                            selectedTiers);
+                            cnaTypes);
                     } else {
                         return alterationCountService.getPatientCnaCounts(
                             entry.getValue(),
                             null,
                             true,
                             true,
-                            cnaTypes,
-                            exludeVUS,
-                            selectedTiers);
+                            cnaTypes);
                     }
                 }));
     }

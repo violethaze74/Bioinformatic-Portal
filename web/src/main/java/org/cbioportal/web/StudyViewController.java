@@ -293,10 +293,7 @@ public class StudyViewController {
                 null, 
                 true, 
                 false,
-                Select.all(),
-                excludeVUS,
-                selectedTiers,
-                excludeGermline);
+                Select.all());
             result.sort((a, b) -> b.getNumberOfAlteredCases() - a.getNumberOfAlteredCases());
             List<String> distinctStudyIds = studyIds.stream().distinct().collect(Collectors.toList());
             if (distinctStudyIds.size() == 1 && !result.isEmpty()) {
@@ -344,10 +341,7 @@ public class StudyViewController {
                 null,
                 true,
                 false,
-                Select.all(),
-                excludeVUS,
-                selectedTiers,
-                excludeGermline);
+                Select.all());
             result.sort((a, b) -> b.getNumberOfAlteredCases() - a.getNumberOfAlteredCases());
             List<String> distinctStudyIds = studyIds.stream().distinct().collect(Collectors.toList());
             if (distinctStudyIds.size() == 1 && !result.isEmpty()) {
@@ -398,9 +392,7 @@ public class StudyViewController {
                 null,
                 true,
                 false,
-                cnaTypes,
-                excludeVUS,
-                selectedTiers);
+                cnaTypes);
             result.sort((a, b) -> b.getNumberOfAlteredCases() - a.getNumberOfAlteredCases());
             List<String> distinctStudyIds = studyIds.stream().distinct().collect(Collectors.toList());
             if (distinctStudyIds.size() == 1 && !result.isEmpty()) {

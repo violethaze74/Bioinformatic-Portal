@@ -61,10 +61,7 @@ public class MutationEnrichmentServiceImpl implements MutationEnrichmentService 
                             null,
                             true,
                             true,
-                            null,
-                            exludeVUS,
-                            selectedTiers,
-                            excludeGermline);
+                            null);
                     } else {
                         return alterationCountService
                             .getPatientMutationCounts(
@@ -72,10 +69,7 @@ public class MutationEnrichmentServiceImpl implements MutationEnrichmentService 
                                 null,
                                 true,
                                 true,
-                                null,
-                                exludeVUS,
-                                selectedTiers,
-                                excludeGermline);
+                                null);
                     }
                 }));
     }

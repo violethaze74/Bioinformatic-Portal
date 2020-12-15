@@ -14,10 +14,7 @@ public interface AlterationRepository {
                                                           List<Integer> entrezGeneIds,
                                                           final Select<MutationEventType> mutationEventTypes,
                                                           final Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                          boolean searchFusions,
-                                                          boolean excludeVUS,
-                                                          List<String> selectedTiers,
-                                                          boolean excludeGermline);
+                                                          boolean searchFusions);
 
     @Cacheable(cacheNames = "GeneralRepositoryCache", condition = "@cacheEnabledConfig.getEnabled()")
     // TODO write javadoc
@@ -25,24 +22,17 @@ public interface AlterationRepository {
                                                            List<Integer> entrezGeneIds,
                                                            final Select<MutationEventType> mutationEventTypes,
                                                            final Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                           boolean searchFusions,
-                                                           boolean excludeVUS,
-                                                           List<String> selectedTiers,
-                                                           boolean excludeGermline);
+                                                           boolean searchFusions);
 
 
     @Cacheable(cacheNames = "GeneralRepositoryCache", condition = "@cacheEnabledConfig.getEnabled()")
     List<CopyNumberCountByGene> getSampleCnaCounts(List<MolecularProfileCaseIdentifier> molecularProfileCaseIdentifiers,
                                                    List<Integer> entrezGeneIds,
-                                                   final Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                   boolean excludeVUS,
-                                                   List<String> selectedTiers);
+                                                   final Select<CopyNumberAlterationEventType> cnaEventTypes);
 
     @Cacheable(cacheNames = "GeneralRepositoryCache", condition = "@cacheEnabledConfig.getEnabled()")
     List<CopyNumberCountByGene> getPatientCnaCounts(List<MolecularProfileCaseIdentifier> molecularProfileCaseIdentifiers,
                                                            List<Integer> entrezGeneIds,
-                                                           final Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                           boolean excludeVUS,
-                                                           List<String> selectedTiers);
+                                                           final Select<CopyNumberAlterationEventType> cnaEventTypes);
     
 }

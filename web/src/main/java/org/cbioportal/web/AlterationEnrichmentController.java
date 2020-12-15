@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @InternalApi
@@ -51,9 +48,6 @@ public class AlterationEnrichmentController {
         @Valid @RequestAttribute(required = false, value = "alterationEventTypes") AlterationEventTypeFilter alterationEventTypes,
         @ApiParam("Type of the enrichment e.g. SAMPLE or PATIENT")
         @RequestParam(defaultValue = "SAMPLE") EnrichmentScope enrichmentScope,
-        @RequestParam(defaultValue = "false") boolean excludeVUS,
-        @RequestParam(defaultValue = "false") boolean excludeGermline,
-        @RequestParam(defaultValue = "") List<String> selectedTiers,
         @ApiParam(required = true, value = "List of groups containing sample identifiers and list of Alteration Types")
         @Valid @RequestBody(required = false) MolecularProfileCasesGroupAndAlterationTypeFilter groupsAndAlterationTypes) throws MolecularProfileNotFoundException {
 
@@ -61,12 +55,20 @@ public class AlterationEnrichmentController {
             .collect(Collectors.toMap(MolecularProfileCasesGroupFilter::getName,
                 MolecularProfileCasesGroupFilter::getMolecularProfileCaseIdentifiers));
 
-        // Extract optional alteration types
-        Select<MutationEventType> mutationEventTypes = alterationEventTypes != null ?
-            Select.byValues(alterationEventTypes.getMutationEventTypes())
+        Select<MutationEventType> selectedMutations = Select.byValues(
+            alterationEventTypes.getMutationEventTypes().entrySet().stream()
+                .filter(e -> e.getValue())
+                .map(e -> e.getKey()));
+        Select<MutationEventType> mutationEventTypes = allOptionsSelected(alterationEventTypes.getMutationEventTypes()) ?
+            Select.byValues(selectedMutations)
             : Select.all();
-        Select<CopyNumberAlterationEventType> cnaEventTypes = alterationEventTypes != null ?
-            Select.byValues(alterationEventTypes.getCopyNumberAlterationEventTypes())
+
+        Select<CopyNumberAlterationEventType> selectedCnas = Select.byValues(
+            alterationEventTypes.getCopyNumberAlterationEventTypes().entrySet().stream()
+                .filter(e -> e.getValue())
+                .map(e -> e.getKey()));
+        Select<CopyNumberAlterationEventType> cnaEventTypes = allOptionsSelected(alterationEventTypes.getCopyNumberAlterationEventTypes()) ?
+            Select.byValues(selectedCnas)
             : Select.all();
 
         List<AlterationEnrichment> alterationEnrichments = alterationEnrichmentService.getAlterationEnrichments(
@@ -74,12 +76,13 @@ public class AlterationEnrichmentController {
             mutationEventTypes,
             cnaEventTypes,
             enrichmentScope,
-            false,
-            excludeVUS,
-            selectedTiers,
-            excludeGermline);
+            false);
 
         return new ResponseEntity<>(alterationEnrichments, HttpStatus.OK);
+    }
+    
+    private boolean allOptionsSelected(Map<?, Boolean> options) {
+        return options.entrySet().stream().allMatch(e -> e.getValue());
     }
 }
 

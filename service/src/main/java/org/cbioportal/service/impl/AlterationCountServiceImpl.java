@@ -29,10 +29,7 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                                                                  boolean includeMissingAlterationsFromGenePanel,
                                                                  Select<MutationEventType> mutationEventTypes,
                                                                  Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                                 boolean searchFusions,
-                                                                 boolean exludeVUS,
-                                                                 List<String> selectedTiers,
-                                                                 boolean excludeGermline) {
+                                                                 boolean searchFusions) {
         
         List<AlterationCountByGene> alterationCountByGenes;
         if (molecularProfileCaseIdentifiers.isEmpty()) {
@@ -42,10 +39,7 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                 entrezGeneIds,
                 mutationEventTypes,
                 cnaEventTypes,
-                searchFusions,
-                exludeVUS,
-                selectedTiers,
-                excludeGermline);
+                searchFusions);
             if (includeFrequency) {
                 alterationEnrichmentUtil.includeFrequencyForSamples(molecularProfileCaseIdentifiers,
                     alterationCountByGenes,
@@ -63,17 +57,14 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                                                                   boolean includeMissingAlterationsFromGenePanel,
                                                                   Select<MutationEventType> mutationEventTypes,
                                                                   Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                                  boolean searchFusions,
-                                                                  boolean exludeVUS,
-                                                                  List<String> selectedTiers,
-                                                                  boolean excludeGermline) {
+                                                                  boolean searchFusions) {
         
         List<AlterationCountByGene> alterationCountByGenes;
         if (molecularProfileCaseIdentifiers.isEmpty()) {
             alterationCountByGenes = Collections.emptyList();
         } else {
             alterationCountByGenes = alterationRepository.getPatientAlterationCounts(molecularProfileCaseIdentifiers,
-                    entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions, exludeVUS, selectedTiers, excludeGermline);
+                    entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
             if (includeFrequency) {
                 alterationEnrichmentUtil.includeFrequencyForPatients(molecularProfileCaseIdentifiers, alterationCountByGenes, includeMissingAlterationsFromGenePanel);
             }
@@ -87,20 +78,14 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                                                                List<Integer> entrezGeneIds,
                                                                boolean includeFrequency,
                                                                boolean includeMissingAlterationsFromGenePanel,
-                                                               Select<MutationEventType> mutationEventTypes,
-                                                               boolean excludeVUS,
-                                                               List<String> selectedTiers,
-                                                               boolean excludeGermline) {
+                                                               Select<MutationEventType> mutationEventTypes) {
         return getSampleAlterationCounts(molecularProfileCaseIdentifiers,
             entrezGeneIds,
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
             mutationEventTypes,
             Select.none(),
-            false,
-            excludeVUS,
-            selectedTiers,
-            excludeGermline);
+            false);
     }
 
     @Override
@@ -108,20 +93,14 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                                                                 List<Integer> entrezGeneIds,
                                                                 boolean includeFrequency,
                                                                 boolean includeMissingAlterationsFromGenePanel,
-                                                                Select<MutationEventType> mutationEventTypes,
-                                                                boolean excludeVUS,
-                                                                List<String> selectedTiers,
-                                                                boolean excludeGermline) {
+                                                                Select<MutationEventType> mutationEventTypes) {
         return getPatientAlterationCounts(molecularProfileCaseIdentifiers,
             entrezGeneIds,
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
             mutationEventTypes,
             Select.none(),
-            false,
-            excludeVUS,
-            selectedTiers,
-            excludeGermline);
+            false);
     }
 
     @Override
@@ -129,20 +108,14 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                                                              List<Integer> entrezGeneIds,
                                                              boolean includeFrequency,
                                                              boolean includeMissingAlterationsFromGenePanel,
-                                                             Select<MutationEventType> mutationEventTypes,
-                                                             boolean excludeVUS,
-                                                             List<String> selectedTiers,
-                                                             boolean excludeGermline) {
+                                                             Select<MutationEventType> mutationEventTypes) {
         return getSampleAlterationCounts(molecularProfileCaseIdentifiers,
             entrezGeneIds,
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
             mutationEventTypes,
             Select.none(),
-            true,
-            excludeVUS,
-            selectedTiers,
-            excludeGermline);
+            true);
     }
 
     @Override
@@ -150,20 +123,14 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                                                               List<Integer> entrezGeneIds,
                                                               boolean includeFrequency,
                                                               boolean includeMissingAlterationsFromGenePanel,
-                                                              Select<MutationEventType> mutationEventTypes,
-                                                              boolean excludeVUS,
-                                                              List<String> selectedTiers,
-                                                              boolean excludeGermline) {
+                                                              Select<MutationEventType> mutationEventTypes) {
         return getPatientAlterationCounts(molecularProfileCaseIdentifiers,
             entrezGeneIds,
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
             mutationEventTypes,
             Select.none(),
-            true,
-            excludeVUS,
-            selectedTiers,
-            excludeGermline);    }
+            true);    }
             
 // -- Should be reinstated when the legacy CNA count endpoint retires            
 //    @Override
@@ -171,18 +138,13 @@ public class AlterationCountServiceImpl implements AlterationCountService {
 //                                                          List<Integer> entrezGeneIds,
 //                                                          boolean includeFrequency,
 //                                                          boolean includeMissingAlterationsFromGenePanel,
-//                                                          List<CopyNumberAlterationEventType> cnaEventTypes,
-//                                                          boolean excludeVUS,
-//                                                          List<String> selectedTiers) {
+//                                                          List<CopyNumberAlterationEventType> cnaEventTypes) {
 //        return getSampleAlterationCounts(molecularProfileCaseIdentifiers,
 //            entrezGeneIds,
 //            includeFrequency,
 //            includeMissingAlterationsFromGenePanel,
 //            new ArrayList<>(),
 //            cnaEventTypes,
-//            false,
-//            excludeVUS,
-//            selectedTiers,
 //            false);
 //    }
 //
@@ -191,18 +153,13 @@ public class AlterationCountServiceImpl implements AlterationCountService {
 //                                                           List<Integer> entrezGeneIds,
 //                                                           boolean includeFrequency,
 //                                                           boolean includeMissingAlterationsFromGenePanel,
-//                                                           List<CopyNumberAlterationEventType> cnaEventTypes,
-//                                                           boolean excludeVUS,
-//                                                           List<String> selectedTiers) {
+//                                                           List<CopyNumberAlterationEventType> cnaEventTypes) {
 //        return getPatientAlterationCounts(molecularProfileCaseIdentifiers,
 //            entrezGeneIds,
 //            includeFrequency,
 //            includeMissingAlterationsFromGenePanel,
 //            new ArrayList<>(),
 //            cnaEventTypes,
-//            false,
-//            excludeVUS,
-//            selectedTiers,
 //            false);
 //    }
     
@@ -211,9 +168,7 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                                                           List<Integer> entrezGeneIds,
                                                           boolean includeFrequency,
                                                           boolean includeMissingAlterationsFromGenePanel,
-                                                          Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                          boolean excludeVUS,
-                                                          List<String> selectedTiers) {
+                                                          Select<CopyNumberAlterationEventType> cnaEventTypes) {
         List<CopyNumberCountByGene> alterationCountByGenes;
         if (molecularProfileCaseIdentifiers.isEmpty()) {
             alterationCountByGenes = Collections.emptyList();
@@ -221,9 +176,7 @@ public class AlterationCountServiceImpl implements AlterationCountService {
             alterationCountByGenes = alterationRepository.getSampleCnaCounts(
                 molecularProfileCaseIdentifiers,
                 entrezGeneIds,
-                cnaEventTypes,
-                excludeVUS,
-                selectedTiers);
+                cnaEventTypes);
             if (includeFrequency) {
                 alterationEnrichmentUtilCna.includeFrequencyForSamples(molecularProfileCaseIdentifiers, alterationCountByGenes, includeMissingAlterationsFromGenePanel);
             }
@@ -237,9 +190,7 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                                                            List<Integer> entrezGeneIds,
                                                            boolean includeFrequency,
                                                            boolean includeMissingAlterationsFromGenePanel,
-                                                           Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                           boolean excludeVUS,
-                                                           List<String> selectedTiers) {
+                                                           Select<CopyNumberAlterationEventType> cnaEventTypes) {
         List<CopyNumberCountByGene> alterationCountByGenes;
         if (molecularProfileCaseIdentifiers.isEmpty()) {
             alterationCountByGenes = Collections.emptyList();
@@ -247,9 +198,7 @@ public class AlterationCountServiceImpl implements AlterationCountService {
             alterationCountByGenes = alterationRepository.getPatientCnaCounts(
                 molecularProfileCaseIdentifiers,
                 entrezGeneIds,
-                cnaEventTypes,
-                excludeVUS,
-                selectedTiers);
+                cnaEventTypes);
             if (includeFrequency) {
                 alterationEnrichmentUtilCna.includeFrequencyForPatients(molecularProfileCaseIdentifiers, alterationCountByGenes, includeMissingAlterationsFromGenePanel);
             }

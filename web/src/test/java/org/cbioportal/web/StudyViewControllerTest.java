@@ -291,10 +291,7 @@ public class StudyViewControllerTest {
             isNull(),
             anyBoolean(),
             anyBoolean(),
-            any(Select.class),
-            anyBoolean(),
-            anyList(),
-            anyBoolean())).thenReturn(mutationCounts);
+            any(Select.class))).thenReturn(mutationCounts);
 
         StudyViewFilter studyViewFilter = new StudyViewFilter();
         studyViewFilter.setStudyIds(Arrays.asList(TEST_STUDY_ID));
@@ -348,10 +345,7 @@ public class StudyViewControllerTest {
             isNull(),
             anyBoolean(),
             anyBoolean(),
-            any(Select.class),
-            anyBoolean(),
-            anyList(),
-            anyBoolean())).thenReturn(fusionCounts);
+            any(Select.class))).thenReturn(fusionCounts);
 
         StudyViewFilter studyViewFilter = new StudyViewFilter();
         studyViewFilter.setStudyIds(Arrays.asList(TEST_STUDY_ID));
@@ -408,9 +402,7 @@ public class StudyViewControllerTest {
             isNull(),
             anyBoolean(),
             anyBoolean(),
-            any(Select.class),
-            anyBoolean(),
-            anyList())).thenReturn(cnaCounts);
+            any(Select.class))).thenReturn(cnaCounts);
 
         StudyViewFilter studyViewFilter = new StudyViewFilter();
         studyViewFilter.setStudyIds(Arrays.asList(TEST_STUDY_ID));
