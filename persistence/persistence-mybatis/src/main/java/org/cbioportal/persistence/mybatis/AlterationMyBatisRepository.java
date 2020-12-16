@@ -24,15 +24,20 @@ public class AlterationMyBatisRepository implements AlterationRepository {
                                                                  final Select<CopyNumberAlterationEventType> cnaEventTypes,
                                                                  boolean searchFusions) {
 
-        if (mutationEventTypes.hasNone() && cnaEventTypes.hasNone()) {
+        if ((mutationEventTypes.hasNone() && cnaEventTypes.hasNone())
+            || molecularProfileCaseIdentifiers.isEmpty()) {
             return Collections.emptyList();
         }
 
         Pair<List<String>, List<String>> caseIdToProfileIdArrays = createCaseIdToProfileIdArrays(molecularProfileCaseIdentifiers);
 
+        List<Integer> internalSampleIds = alterationCountsMapper.getSampleInternalIds(caseIdToProfileIdArrays.getLeft(),
+            caseIdToProfileIdArrays.getRight());
+        if (internalSampleIds.isEmpty()) {
+            return Collections.emptyList();
+        }
         return alterationCountsMapper.getSampleAlterationCounts(
-            caseIdToProfileIdArrays.getLeft(),
-            caseIdToProfileIdArrays.getRight(),
+            internalSampleIds,
             entrezGeneIds,
             createMutationTypeList(mutationEventTypes),
             createCnaTypeList(cnaEventTypes),
@@ -46,15 +51,21 @@ public class AlterationMyBatisRepository implements AlterationRepository {
                                                                   Select<CopyNumberAlterationEventType> cnaEventTypes,
                                                                   boolean searchFusions) {
 
-        if (mutationEventTypes.hasNone() && cnaEventTypes.hasNone()) {
+        if ((mutationEventTypes.hasNone() && cnaEventTypes.hasNone())
+            || molecularProfileCaseIdentifiers.isEmpty()) {
             return Collections.emptyList();
         }
 
         Pair<List<String>, List<String>> caseIdToProfileIdArrays = createCaseIdToProfileIdArrays(molecularProfileCaseIdentifiers);
 
+        List<Integer> internalPatientIds = alterationCountsMapper.getPatientInternalIds(caseIdToProfileIdArrays.getLeft(),
+            caseIdToProfileIdArrays.getRight());
+        if (internalPatientIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+
         return alterationCountsMapper.getPatientAlterationCounts(
-            caseIdToProfileIdArrays.getLeft(),
-            caseIdToProfileIdArrays.getRight(),
+            internalPatientIds,
             entrezGeneIds,
             createMutationTypeList(mutationEventTypes),
             createCnaTypeList(cnaEventTypes),
@@ -66,16 +77,19 @@ public class AlterationMyBatisRepository implements AlterationRepository {
                                                           List<Integer> entrezGeneIds,
                                                           Select<CopyNumberAlterationEventType> cnaEventTypes) {
 
-
         if (cnaEventTypes.hasNone()) {
             return Collections.emptyList();
         }
 
         Pair<List<String>, List<String>> caseIdToProfileIdArrays = createCaseIdToProfileIdArrays(molecularProfileCaseIdentifiers);
 
+        List<Integer> internalSampleIds = alterationCountsMapper.getSampleInternalIds(caseIdToProfileIdArrays.getLeft(),
+            caseIdToProfileIdArrays.getRight());
+        if (internalSampleIds.isEmpty()) {
+            return Collections.emptyList();
+        }
         return alterationCountsMapper.getSampleCnaCounts(
-            caseIdToProfileIdArrays.getLeft(),
-            caseIdToProfileIdArrays.getRight(),
+            internalSampleIds,
             entrezGeneIds,
             createCnaTypeList(cnaEventTypes));
     }
