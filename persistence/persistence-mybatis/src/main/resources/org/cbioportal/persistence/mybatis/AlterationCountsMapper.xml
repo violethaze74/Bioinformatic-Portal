@@ -34,7 +34,7 @@
                 </if>
                 <include refid="whereSearchFusions"/>
             </where>
-            UNION
+            UNION ALL
             SELECT
                 sample_cna_event.SAMPLE_ID,
                 cna_event.ENTREZ_GENE_ID,
@@ -101,7 +101,7 @@
                 </if>
                 <include refid="whereSearchFusions"/>
             </where>
-            UNION
+            UNION ALL
             SELECT
                 patient.STABLE_ID as PATIENT_ID,
                 cna_event.ENTREZ_GENE_ID , gene.HUGO_GENE_SYMBOL,
