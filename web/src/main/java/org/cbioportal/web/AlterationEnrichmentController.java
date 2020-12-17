@@ -21,6 +21,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @InternalApi
 @RestController
@@ -55,21 +56,17 @@ public class AlterationEnrichmentController {
             .collect(Collectors.toMap(MolecularProfileCasesGroupFilter::getName,
                 MolecularProfileCasesGroupFilter::getMolecularProfileCaseIdentifiers));
 
-        Select<MutationEventType> selectedMutations = Select.byValues(
-            alterationEventTypes.getMutationEventTypes().entrySet().stream()
-                .filter(e -> e.getValue())
-                .map(e -> e.getKey()));
+        Stream<MutationEventType> selectedMutations = alterationEventTypes.getMutationEventTypes().entrySet().stream()
+            .filter(e -> e.getValue())
+            .map(e -> e.getKey());
         Select<MutationEventType> mutationEventTypes = allOptionsSelected(alterationEventTypes.getMutationEventTypes()) ?
-            Select.byValues(selectedMutations)
-            : Select.all();
+            Select.all() : Select.byValues(selectedMutations);
 
-        Select<CopyNumberAlterationEventType> selectedCnas = Select.byValues(
-            alterationEventTypes.getCopyNumberAlterationEventTypes().entrySet().stream()
-                .filter(e -> e.getValue())
-                .map(e -> e.getKey()));
+        Stream<CopyNumberAlterationEventType> selectedCnas = alterationEventTypes.getCopyNumberAlterationEventTypes().entrySet().stream()
+            .filter(e -> e.getValue())
+            .map(e -> e.getKey());
         Select<CopyNumberAlterationEventType> cnaEventTypes = allOptionsSelected(alterationEventTypes.getCopyNumberAlterationEventTypes()) ?
-            Select.byValues(selectedCnas)
-            : Select.all();
+            Select.all() : Select.byValues(selectedCnas);
 
         List<AlterationEnrichment> alterationEnrichments = alterationEnrichmentService.getAlterationEnrichments(
             groupCaseIdentifierSet,
