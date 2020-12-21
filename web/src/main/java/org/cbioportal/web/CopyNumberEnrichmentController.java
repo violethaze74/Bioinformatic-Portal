@@ -4,7 +4,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.cbioportal.model.AlterationEnrichment;
-import org.cbioportal.model.AnnotationSourceFilter;
 import org.cbioportal.model.CopyNumberAlterationEventType;
 import org.cbioportal.model.MolecularProfileCaseIdentifier;
 import org.cbioportal.service.CopyNumberEnrichmentService;
@@ -46,8 +45,6 @@ public class CopyNumberEnrichmentController {
         @RequestAttribute(required = false, value = "involvedCancerStudies") Collection<String> involvedCancerStudies,
         @ApiIgnore // prevent reference to this attribute in the swagger-ui interface. this attribute is needed for the @PreAuthorize tag above.
         @Valid @RequestAttribute(required = false, value = "interceptedMolecularProfileCasesGroupFilters") List<MolecularProfileCasesGroupFilter> interceptedMolecularProfileCasesGroupFilters,
-        @ApiParam("VUS and germline filters to be applied to the data")
-        @Valid @RequestParam(required = false, value = "annotationSourceFilter") AnnotationSourceFilter annotationSourceFilter,
         @ApiParam("Type of the copy number event")
         @RequestParam(defaultValue = "HOMDEL") CopyNumberAlterationEventType copyNumberEventType,
         @ApiParam("Type of the enrichment e.g. SAMPLE or PATIENT")
