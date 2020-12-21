@@ -9,7 +9,6 @@ import org.cbioportal.model.*;
 import org.cbioportal.model.util.Select;
 import org.cbioportal.persistence.AlterationRepository;
 import org.cbioportal.service.*;
-import org.cbioportal.service.impl.AlterationCountServiceImpl;
 import org.cbioportal.web.parameter.ClinicalDataBinCountFilter;
 import org.cbioportal.web.parameter.ClinicalDataBinFilter;
 import org.cbioportal.web.parameter.ClinicalDataCountFilter;
@@ -20,7 +19,6 @@ import org.cbioportal.web.util.StudyViewFilterApplier;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -277,13 +275,13 @@ public class StudyViewControllerTest {
         mutationCount1.setEntrezGeneId(TEST_ENTREZ_GENE_ID_1);
         mutationCount1.setHugoGeneSymbol(TEST_HUGO_GENE_SYMBOL_1);
         mutationCount1.setNumberOfAlteredCases(1);
-        mutationCount1.setNumberOfAlterations(3);
+        mutationCount1.setTotalCount(3);
         mutationCounts.add(mutationCount1);
         AlterationCountByGene mutationCount2 = new AlterationCountByGene();
         mutationCount2.setEntrezGeneId(TEST_ENTREZ_GENE_ID_2);
         mutationCount2.setHugoGeneSymbol(TEST_HUGO_GENE_SYMBOL_2);
         mutationCount2.setNumberOfAlteredCases(2);
-        mutationCount2.setNumberOfAlterations(2);
+        mutationCount2.setTotalCount(2);
         mutationCounts.add(mutationCount2);
 
         Mockito.when(alterationCountService.getSampleMutationCounts(
@@ -331,13 +329,13 @@ public class StudyViewControllerTest {
         fusionCount1.setEntrezGeneId(TEST_ENTREZ_GENE_ID_1);
         fusionCount1.setHugoGeneSymbol(TEST_HUGO_GENE_SYMBOL_1);
         fusionCount1.setNumberOfAlteredCases(1);
-        fusionCount1.setNumberOfAlterations(1);
+        fusionCount1.setTotalCount(1);
         fusionCounts.add(fusionCount1);
         AlterationCountByGene fusionCount2 = new AlterationCountByGene();
         fusionCount2.setEntrezGeneId(TEST_ENTREZ_GENE_ID_2);
         fusionCount2.setHugoGeneSymbol(TEST_HUGO_GENE_SYMBOL_2);
         fusionCount2.setNumberOfAlteredCases(2);
-        fusionCount2.setNumberOfAlterations(2);
+        fusionCount2.setTotalCount(2);
         fusionCounts.add(fusionCount2);
 
         Mockito.when(alterationCountService.getSampleFusionCounts(

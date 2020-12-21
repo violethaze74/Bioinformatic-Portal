@@ -9,7 +9,7 @@ public class AlterationCountByGene implements Serializable {
     private Integer entrezGeneId;
     private String hugoGeneSymbol;
     private Integer numberOfAlteredCases;
-    private Integer numberOfAlterations;
+    private Integer totalCount;
     private Integer numberOfProfiledCases;
     private BigDecimal qValue;
     private Set<String> matchingGenePanelIds;
@@ -38,12 +38,12 @@ public class AlterationCountByGene implements Serializable {
         this.numberOfAlteredCases = numberOfAlteredCases;
     }
 
-    public Integer getNumberOfAlterations() {
-        return numberOfAlterations;
+    public Integer getTotalCount() {
+        return totalCount;
     }
 
-    public void setNumberOfAlterations(Integer numberOfAlterations) {
-        this.numberOfAlterations = numberOfAlterations;
+    public void setTotalCount(Integer totalCount) {
+        this.totalCount = totalCount;
     }
     
     public Integer getNumberOfProfiledCases() {
