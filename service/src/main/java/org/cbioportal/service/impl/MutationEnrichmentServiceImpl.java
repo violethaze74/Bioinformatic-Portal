@@ -1,6 +1,7 @@
 package org.cbioportal.service.impl;
 
 import org.cbioportal.model.*;
+import org.cbioportal.model.util.Select;
 import org.cbioportal.service.AlterationCountService;
 import org.cbioportal.service.MutationEnrichmentService;
 import org.cbioportal.service.util.AlterationEnrichmentUtil;
@@ -55,7 +56,7 @@ public class MutationEnrichmentServiceImpl implements MutationEnrichmentService 
                             null,
                             true,
                             true,
-                            null);
+                            Select.all());
                     } else {
                         return alterationCountService
                             .getPatientMutationCounts(
@@ -63,7 +64,7 @@ public class MutationEnrichmentServiceImpl implements MutationEnrichmentService 
                                 null,
                                 true,
                                 true,
-                                null);
+                                Select.all());
                     }
                 }));
     }

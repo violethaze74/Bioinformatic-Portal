@@ -59,22 +59,20 @@ public class CopyNumberEnrichmentServiceImpl implements CopyNumberEnrichmentServ
                         sampleIds.add(molecularProfileCase.getCaseId());
                     });
 
-                    Select<CopyNumberAlterationEventType> cnaTypes = Select.byValues(Arrays.asList(copyNumberEventType));
-
                     if (enrichmentType.name().equals("SAMPLE")) {
                         return alterationCountService.getSampleCnaCounts(
                             entry.getValue(),
                             null,
                             true,
                             true,
-                            cnaTypes);
+                            Select.all());
                     } else {
                         return alterationCountService.getPatientCnaCounts(
                             entry.getValue(),
                             null,
                             true,
                             true,
-                            cnaTypes);
+                            Select.all());
                     }
                 }));
     }
