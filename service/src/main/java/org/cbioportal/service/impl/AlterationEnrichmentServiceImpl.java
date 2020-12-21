@@ -23,10 +23,10 @@ public class AlterationEnrichmentServiceImpl implements AlterationEnrichmentServ
     @Override
     public List<AlterationEnrichment> getAlterationEnrichments(
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets, final Select<MutationEventType> mutationEventTypes,
-        final Select<CopyNumberAlterationEventType> cnaEventTypes, EnrichmentScope enrichmentScope, boolean searchFusions) {
+        final Select<CopyNumberAlterationEventType> cnaEventTypes, EnrichmentType enrichmentType, boolean searchFusions) {
 
         Map<String, List<AlterationCountByGene>> alterationCountsbyEntrezGeneIdAndGroup = getAlterationCountsbyEntrezGeneIdAndGroup(
-            molecularProfileCaseSets, mutationEventTypes, cnaEventTypes, enrichmentScope, searchFusions);
+            molecularProfileCaseSets, mutationEventTypes, cnaEventTypes, enrichmentType, searchFusions);
 
         return alterationEnrichmentUtil.createAlterationEnrichments(alterationCountsbyEntrezGeneIdAndGroup,
                 molecularProfileCaseSets);
@@ -36,7 +36,7 @@ public class AlterationEnrichmentServiceImpl implements AlterationEnrichmentServ
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets,
         Select<MutationEventType> mutationEventTypes,
         Select<CopyNumberAlterationEventType> cnaEventTypes,
-        EnrichmentScope enrichmentType,
+        EnrichmentType enrichmentType,
         boolean searchFusions) {
         return molecularProfileCaseSets
             .entrySet()
@@ -45,7 +45,7 @@ public class AlterationEnrichmentServiceImpl implements AlterationEnrichmentServ
                 entry -> entry.getKey(), // group name
                 entry -> {               // group counts
 
-                    if (enrichmentType.equals(EnrichmentScope.SAMPLE)) {
+                    if (enrichmentType.equals(EnrichmentType.SAMPLE)) {
                         return alterationCountService
                             .getSampleAlterationCounts(
                                 entry.getValue(),

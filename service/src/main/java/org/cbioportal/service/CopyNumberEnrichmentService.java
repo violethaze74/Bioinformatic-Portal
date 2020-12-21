@@ -10,7 +10,7 @@ public interface CopyNumberEnrichmentService {
 
     List<AlterationEnrichment> getCopyNumberEnrichments(Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets,
                                                         CopyNumberAlterationEventType copyNumberEventType,
-                                                        EnrichmentScope enrichmentScope,
+                                                        EnrichmentType enrichmentType,
                                                         boolean exludeVUS,
                                                         List<String> selectedTiers) throws MolecularProfileNotFoundException;
 }

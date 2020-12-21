@@ -48,7 +48,7 @@ public class AlterationEnrichmentController {
 //            "array will include no respective types. undefined will include all respective types.")
         @Valid @RequestAttribute(required = false, value = "alterationEventTypes") AlterationEventTypeFilter alterationEventTypes,
         @ApiParam("Type of the enrichment e.g. SAMPLE or PATIENT")
-        @RequestParam(defaultValue = "SAMPLE") EnrichmentScope enrichmentScope,
+        @RequestParam(defaultValue = "SAMPLE") EnrichmentType enrichmentType,
         @ApiParam(required = true, value = "List of groups containing sample identifiers and list of Alteration Types")
         @Valid @RequestBody(required = false) MolecularProfileCasesGroupAndAlterationTypeFilter groupsAndAlterationTypes) throws MolecularProfileNotFoundException {
 
@@ -72,7 +72,7 @@ public class AlterationEnrichmentController {
             groupCaseIdentifierSet,
             mutationEventTypes,
             cnaEventTypes,
-            enrichmentScope,
+            enrichmentType,
             false);
 
         return new ResponseEntity<>(alterationEnrichments, HttpStatus.OK);

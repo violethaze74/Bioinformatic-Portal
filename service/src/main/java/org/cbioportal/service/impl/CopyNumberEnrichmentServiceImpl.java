@@ -27,14 +27,14 @@ public class CopyNumberEnrichmentServiceImpl implements CopyNumberEnrichmentServ
     public List<AlterationEnrichment> getCopyNumberEnrichments(
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets,
         CopyNumberAlterationEventType copyNumberEventType,
-        EnrichmentScope enrichmentScope,
+        EnrichmentType enrichmentType,
         boolean exludeVUS,
         List<String> selectedTiers) throws MolecularProfileNotFoundException {
 
         Map<String, List<CopyNumberCountByGene>> copyNumberCountByGeneAndGroup = getCopyNumberCountByGeneAndGroup(
             molecularProfileCaseSets,
             copyNumberEventType,
-            enrichmentScope,
+            enrichmentType,
             exludeVUS,
             selectedTiers);
 
@@ -47,7 +47,7 @@ public class CopyNumberEnrichmentServiceImpl implements CopyNumberEnrichmentServ
     public Map<String, List<CopyNumberCountByGene>> getCopyNumberCountByGeneAndGroup(
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets,
         CopyNumberAlterationEventType copyNumberEventType,
-        EnrichmentScope enrichmentScope,
+        EnrichmentType enrichmentType,
         boolean exludeVUS,
         List<String> selectedTiers) {
         return molecularProfileCaseSets
@@ -67,7 +67,7 @@ public class CopyNumberEnrichmentServiceImpl implements CopyNumberEnrichmentServ
 
                     Select<CopyNumberAlterationEventType> cnaTypes = Select.byValues(Arrays.asList(copyNumberEventType));
 
-                    if (enrichmentScope.name().equals("SAMPLE")) {
+                    if (enrichmentType.name().equals("SAMPLE")) {
                         return alterationCountService.getSampleCnaCounts(
                             entry.getValue(),
                             null,

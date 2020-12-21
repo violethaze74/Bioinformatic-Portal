@@ -13,7 +13,7 @@ import org.cbioportal.service.ExpressionEnrichmentService;
 import org.cbioportal.service.exception.GenericAssayNotFoundException;
 import org.cbioportal.service.exception.MolecularProfileNotFoundException;
 import org.cbioportal.web.config.annotation.InternalApi;
-import org.cbioportal.model.EnrichmentScope;
+import org.cbioportal.model.EnrichmentType;
 import org.cbioportal.web.parameter.MolecularProfileCasesGroupFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,14 +45,14 @@ public class ExpressionEnrichmentController {
         @ApiIgnore // prevent reference to this attribute in the swagger-ui interface
         @RequestAttribute(required = false, value = "involvedCancerStudies") Collection<String> involvedCancerStudies,
         @ApiParam("Type of the enrichment e.g. SAMPLE or PATIENT")
-        @RequestParam(defaultValue = "SAMPLE") EnrichmentScope enrichmentScope,
+        @RequestParam(defaultValue = "SAMPLE") EnrichmentType enrichmentType,
         @ApiParam(required = true, value = "List of groups containing sample and molecular profile identifiers")
         @Valid @RequestBody(required = false) List<MolecularProfileCasesGroupFilter> groups,
         @ApiIgnore // prevent reference to this attribute in the swagger-ui interface. this attribute is needed for the @PreAuthorize tag above.
         @Valid @RequestAttribute(required = false, value = "interceptedMolecularProfileCasesGroupFilters") List<MolecularProfileCasesGroupFilter> interceptedMolecularProfileCasesGroupFilters) throws MolecularProfileNotFoundException {
 
         return new ResponseEntity<>(
-                fetchExpressionEnrichments(enrichmentScope, interceptedMolecularProfileCasesGroupFilters, false),
+                fetchExpressionEnrichments(enrichmentType, interceptedMolecularProfileCasesGroupFilters, false),
                 HttpStatus.OK);
     }
 
@@ -65,7 +65,7 @@ public class ExpressionEnrichmentController {
         @ApiIgnore // prevent reference to this attribute in the swagger-ui interface
         @RequestAttribute(required = false, value = "involvedCancerStudies") Collection<String> involvedCancerStudies,
         @ApiParam("Type of the enrichment e.g. SAMPLE or PATIENT")
-        @RequestParam(defaultValue = "SAMPLE") EnrichmentScope enrichmentScope,
+        @RequestParam(defaultValue = "SAMPLE") EnrichmentType enrichmentType,
         @ApiParam(required = true, value = "List of groups containing sample and molecular profile identifiers")
         @Valid @RequestBody(required = false) List<MolecularProfileCasesGroupFilter> groups,
         @ApiIgnore // prevent reference to this attribute in the swagger-ui interface. this attribute is needed for the @PreAuthorize tag above.
@@ -73,11 +73,11 @@ public class ExpressionEnrichmentController {
                 throws MolecularProfileNotFoundException, UnsupportedOperationException, GenericAssayNotFoundException {
 
         return new ResponseEntity<>(
-                fetchExpressionEnrichments(enrichmentScope, interceptedMolecularProfileCasesGroupFilters, true),
+                fetchExpressionEnrichments(enrichmentType, interceptedMolecularProfileCasesGroupFilters, true),
                 HttpStatus.OK);
     }
 
-    private <S extends ExpressionEnrichment> List<S> fetchExpressionEnrichments(EnrichmentScope enrichmentScope,
+    private <S extends ExpressionEnrichment> List<S> fetchExpressionEnrichments(EnrichmentType enrichmentType,
                                                                                 List<MolecularProfileCasesGroupFilter> interceptedMolecularProfileCasesGroupFilters,
                                                                                 Boolean isRequestForGenericAssayEnrichments) throws MolecularProfileNotFoundException {
 
@@ -96,10 +96,10 @@ public class ExpressionEnrichmentController {
 
         if (isRequestForGenericAssayEnrichments) {
             return (List<S>) expressionEnrichmentService.getGenericAssayEnrichments(
-                    molecularProfileIds.iterator().next(), groupCaseIdentifierSet, enrichmentScope.name());
+                    molecularProfileIds.iterator().next(), groupCaseIdentifierSet, enrichmentType.name());
         }
 
         return (List<S>) expressionEnrichmentService.getGenomicEnrichments(molecularProfileIds.iterator().next(),
-                groupCaseIdentifierSet, enrichmentScope.name());
+                groupCaseIdentifierSet, enrichmentType.name());
     }
 }

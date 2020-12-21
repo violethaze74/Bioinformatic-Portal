@@ -10,7 +10,7 @@ import org.cbioportal.model.MolecularProfileCaseIdentifier;
 import org.cbioportal.service.CopyNumberEnrichmentService;
 import org.cbioportal.service.exception.MolecularProfileNotFoundException;
 import org.cbioportal.web.config.annotation.InternalApi;
-import org.cbioportal.model.EnrichmentScope;
+import org.cbioportal.model.EnrichmentType;
 import org.cbioportal.web.parameter.MolecularProfileCasesGroupFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +51,7 @@ public class CopyNumberEnrichmentController {
         @ApiParam("Type of the copy number event")
         @RequestParam(defaultValue = "HOMDEL") CopyNumberAlterationEventType copyNumberEventType,
         @ApiParam("Type of the enrichment e.g. SAMPLE or PATIENT")
-        @RequestParam(defaultValue = "SAMPLE") EnrichmentScope enrichmentScope,
+        @RequestParam(defaultValue = "SAMPLE") EnrichmentType enrichmentType,
         @RequestParam(defaultValue = "false") boolean excludeVUS,
         @RequestParam(defaultValue = "") List<String> selectedTiers,
         @ApiParam(required = true, value = "List of groups containing sample identifiers")
@@ -66,7 +65,7 @@ public class CopyNumberEnrichmentController {
             copyNumberEnrichmentService.getCopyNumberEnrichments(
                 groupCaseIdentifierSet,
                 copyNumberEventType,
-                enrichmentScope,
+                enrichmentType,
                 excludeVUS,
                 selectedTiers), HttpStatus.OK);
     }

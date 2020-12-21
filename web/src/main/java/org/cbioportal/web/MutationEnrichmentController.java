@@ -9,7 +9,7 @@ import org.cbioportal.service.MutationEnrichmentService;
 import org.cbioportal.service.exception.MolecularProfileNotFoundException;
 import org.cbioportal.web.config.annotation.InternalApi;
 import org.cbioportal.model.MutationAnnotationSourceFilter;
-import org.cbioportal.model.EnrichmentScope;
+import org.cbioportal.model.EnrichmentType;
 import org.cbioportal.web.parameter.MolecularProfileCasesGroupFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,7 +46,7 @@ public class MutationEnrichmentController {
         @ApiParam("VUS and germline filters to be applied to the data")
         @Valid @RequestParam(required = false, value = "annotationSourceFilter") MutationAnnotationSourceFilter annotationSourceFilter,
         @ApiParam("Type of the enrichment e.g. SAMPLE or PATIENT")
-        @RequestParam(defaultValue = "SAMPLE") EnrichmentScope enrichmentScope,
+        @RequestParam(defaultValue = "SAMPLE") EnrichmentType enrichmentType,
         @RequestParam(defaultValue = "false") boolean excludeVUS,
         @RequestParam(defaultValue = "false") boolean excludeGermline,
         @RequestParam(defaultValue = "") List<String> selectedTiers,
@@ -60,7 +60,7 @@ public class MutationEnrichmentController {
         return new ResponseEntity<>(
             mutationEnrichmentService.getMutationEnrichments(
                 groupCaseIdentifierSet,
-                enrichmentScope,
+                enrichmentType,
                 excludeVUS,
                 selectedTiers,
                 excludeGermline), HttpStatus.OK);

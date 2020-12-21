@@ -77,7 +77,7 @@ public class AlterationEnrichmentServiceImplTest extends BaseServiceImplTest {
                 groupMolecularProfileCaseSets,
                 mutationTypes,
                 cnaTypes,
-                EnrichmentScope.SAMPLE,
+                EnrichmentType.SAMPLE,
                 false);
         Assert.assertEquals(result, expectedAlterationEnrichments);
     }

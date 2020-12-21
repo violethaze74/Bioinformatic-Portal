@@ -1,8 +1,7 @@
 package org.cbioportal.service;
 
-import org.cbioportal.model.AlterationCountByGene;
 import org.cbioportal.model.AlterationEnrichment;
-import org.cbioportal.model.EnrichmentScope;
+import org.cbioportal.model.EnrichmentType;
 import org.cbioportal.model.MolecularProfileCaseIdentifier;
 import org.cbioportal.service.exception.MolecularProfileNotFoundException;
 
@@ -13,7 +12,7 @@ public interface MutationEnrichmentService {
 
     List<AlterationEnrichment> getMutationEnrichments(
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets,
-        EnrichmentScope enrichmentScope,
+        EnrichmentType enrichmentType,
         boolean exludeVUS,
         List<String> selectedTiers,
         boolean excludeGermline)
