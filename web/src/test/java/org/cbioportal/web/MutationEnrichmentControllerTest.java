@@ -108,10 +108,7 @@ public class MutationEnrichmentControllerTest {
 
         Mockito.when(mutationEnrichmentService.getMutationEnrichments(
             anyMap(),
-            any(),
-            anyBoolean(),
-            anyList(),
-            anyBoolean()))
+            any()))
             .thenReturn(alterationEnrichments);
 
         MolecularProfileCaseIdentifier entity1 = new MolecularProfileCaseIdentifier();

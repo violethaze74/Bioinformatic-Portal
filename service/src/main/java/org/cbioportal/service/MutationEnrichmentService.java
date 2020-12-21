@@ -12,9 +12,6 @@ public interface MutationEnrichmentService {
 
     List<AlterationEnrichment> getMutationEnrichments(
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets,
-        EnrichmentType enrichmentType,
-        boolean exludeVUS,
-        List<String> selectedTiers,
-        boolean excludeGermline)
+        EnrichmentType enrichmentType)
         throws MolecularProfileNotFoundException;
 }

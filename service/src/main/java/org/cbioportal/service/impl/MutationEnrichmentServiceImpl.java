@@ -23,13 +23,10 @@ public class MutationEnrichmentServiceImpl implements MutationEnrichmentService 
     @Override
     public List<AlterationEnrichment> getMutationEnrichments(
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets,
-        EnrichmentType enrichmentType,
-        boolean exludeVUS,
-        List<String> selectedTiers,
-        boolean excludeGermline) {
+        EnrichmentType enrichmentType) {
 
         Map<String, List<AlterationCountByGene>> mutationCountsbyEntrezGeneIdAndGroup = getMutationCountsbyEntrezGeneIdAndGroup(
-            molecularProfileCaseSets, enrichmentType, exludeVUS, selectedTiers, excludeGermline);
+            molecularProfileCaseSets, enrichmentType);
 
         return alterationEnrichmentUtil.createAlterationEnrichments(mutationCountsbyEntrezGeneIdAndGroup,
             molecularProfileCaseSets);
@@ -37,10 +34,7 @@ public class MutationEnrichmentServiceImpl implements MutationEnrichmentService 
 
     public Map<String, List<AlterationCountByGene>> getMutationCountsbyEntrezGeneIdAndGroup(
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets,
-        EnrichmentType enrichmentType,
-        boolean exludeVUS,
-        List<String> selectedTiers,
-        boolean excludeGermline) {
+        EnrichmentType enrichmentType) {
         return molecularProfileCaseSets
             .entrySet()
             .stream()

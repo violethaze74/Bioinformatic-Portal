@@ -7,7 +7,7 @@
         SELECT 
             ENTREZ_GENE_ID AS entrezGeneId,
             HUGO_GENE_SYMBOL AS hugoGeneSymbol,
-            COUNT(*) AS numberOfAlterations,
+            COUNT(*) AS totalCount,
             COUNT(DISTINCT(SAMPLE_ID)) AS numberOfAlteredCases
         FROM
         (
@@ -80,7 +80,7 @@
         SELECT
             ENTREZ_GENE_ID AS entrezGeneId,
             HUGO_GENE_SYMBOL AS hugoGeneSymbol,
-            COUNT(*) AS numberOfAlterations,
+            COUNT(*) AS totalCount,
             COUNT(DISTINCT(PATIENT_ID)) AS numberOfAlteredCases
         FROM
         (

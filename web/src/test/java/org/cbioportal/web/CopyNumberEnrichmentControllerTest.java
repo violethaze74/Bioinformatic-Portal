@@ -115,9 +115,7 @@ public class CopyNumberEnrichmentControllerTest {
         Mockito.when(copyNumberEnrichmentService.getCopyNumberEnrichments(
             anyMap(),
             any(),
-            any(),
-            anyBoolean(),
-            anyList()))
+            any()))
         .thenReturn(alterationEnrichments);
 
         MolecularProfileCaseIdentifier entity1 = new MolecularProfileCaseIdentifier();

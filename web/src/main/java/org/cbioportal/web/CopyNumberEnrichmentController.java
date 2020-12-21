@@ -52,8 +52,6 @@ public class CopyNumberEnrichmentController {
         @RequestParam(defaultValue = "HOMDEL") CopyNumberAlterationEventType copyNumberEventType,
         @ApiParam("Type of the enrichment e.g. SAMPLE or PATIENT")
         @RequestParam(defaultValue = "SAMPLE") EnrichmentType enrichmentType,
-        @RequestParam(defaultValue = "false") boolean excludeVUS,
-        @RequestParam(defaultValue = "") List<String> selectedTiers,
         @ApiParam(required = true, value = "List of groups containing sample identifiers")
         @Valid @RequestBody(required = false) List<MolecularProfileCasesGroupFilter> groups) throws MolecularProfileNotFoundException {
 
@@ -65,8 +63,6 @@ public class CopyNumberEnrichmentController {
             copyNumberEnrichmentService.getCopyNumberEnrichments(
                 groupCaseIdentifierSet,
                 copyNumberEventType,
-                enrichmentType,
-                excludeVUS,
-                selectedTiers), HttpStatus.OK);
+                enrichmentType), HttpStatus.OK);
     }
 }

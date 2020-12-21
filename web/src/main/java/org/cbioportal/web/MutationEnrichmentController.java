@@ -47,9 +47,6 @@ public class MutationEnrichmentController {
         @Valid @RequestParam(required = false, value = "annotationSourceFilter") MutationAnnotationSourceFilter annotationSourceFilter,
         @ApiParam("Type of the enrichment e.g. SAMPLE or PATIENT")
         @RequestParam(defaultValue = "SAMPLE") EnrichmentType enrichmentType,
-        @RequestParam(defaultValue = "false") boolean excludeVUS,
-        @RequestParam(defaultValue = "false") boolean excludeGermline,
-        @RequestParam(defaultValue = "") List<String> selectedTiers,
         @ApiParam(required = true, value = "List of groups containing sample identifiers")
         @Valid @RequestBody(required = false) List<MolecularProfileCasesGroupFilter> groups) throws MolecularProfileNotFoundException {
 
@@ -60,9 +57,6 @@ public class MutationEnrichmentController {
         return new ResponseEntity<>(
             mutationEnrichmentService.getMutationEnrichments(
                 groupCaseIdentifierSet,
-                enrichmentType,
-                excludeVUS,
-                selectedTiers,
-                excludeGermline), HttpStatus.OK);
+                enrichmentType), HttpStatus.OK);
     }
 }

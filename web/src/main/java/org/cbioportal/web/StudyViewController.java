@@ -269,9 +269,6 @@ public class StudyViewController {
     public ResponseEntity<List<AlterationCountByGene>> fetchMutatedGenes(
         @ApiParam(required = true, value = "Study view filter")
         @Valid @RequestBody(required = false) StudyViewFilter studyViewFilter,
-        @RequestParam(defaultValue = "false") boolean excludeVUS,
-        @RequestParam(defaultValue = "false") boolean excludeGermline,
-        @RequestParam(defaultValue = "") List<String> selectedTiers,
         @ApiIgnore // prevent reference to this attribute in the swagger-ui interface
         @RequestAttribute(required = false, value = "involvedCancerStudies") Collection<String> involvedCancerStudies,
         @ApiIgnore // prevent reference to this attribute in the swagger-ui interface. this attribute is needed for the @PreAuthorize tag above.
@@ -318,9 +315,6 @@ public class StudyViewController {
     public ResponseEntity<List<AlterationCountByGene>> fetchFusionGenes(
         @ApiParam(required = true, value = "Study view filter")
         @Valid @RequestBody(required = false) StudyViewFilter studyViewFilter,
-        @RequestParam(defaultValue = "false") boolean excludeVUS,
-        @RequestParam(defaultValue = "false") boolean excludeGermline,
-        @RequestParam(defaultValue = "") List<String> selectedTiers,
         @ApiIgnore // prevent reference to this attribute in the swagger-ui interface. This attribute is needed for the @PreAuthorize tag above.
         @RequestAttribute(required = false, value = "involvedCancerStudies") Collection<String> involvedCancerStudies,
         @ApiIgnore // prevent reference to this attribute in the swagger-ui interface.
@@ -367,8 +361,6 @@ public class StudyViewController {
     public ResponseEntity<List<CopyNumberCountByGene>> fetchCNAGenes(
         @ApiParam(required = true, value = "Study view filter")
         @Valid @RequestBody(required = false) StudyViewFilter studyViewFilter,
-        @RequestParam(defaultValue = "false") boolean excludeVUS,
-        @RequestParam(defaultValue = "") List<String> selectedTiers,
         @ApiIgnore // prevent reference to this attribute in the swagger-ui interface
         @RequestAttribute(required = false, value = "involvedCancerStudies") Collection<String> involvedCancerStudies,
         @ApiIgnore // prevent reference to this attribute in the swagger-ui interface. this attribute is needed for the @PreAuthorize tag above.

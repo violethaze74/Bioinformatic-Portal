@@ -27,16 +27,12 @@ public class CopyNumberEnrichmentServiceImpl implements CopyNumberEnrichmentServ
     public List<AlterationEnrichment> getCopyNumberEnrichments(
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets,
         CopyNumberAlterationEventType copyNumberEventType,
-        EnrichmentType enrichmentType,
-        boolean exludeVUS,
-        List<String> selectedTiers) throws MolecularProfileNotFoundException {
+        EnrichmentType enrichmentType) throws MolecularProfileNotFoundException {
 
         Map<String, List<CopyNumberCountByGene>> copyNumberCountByGeneAndGroup = getCopyNumberCountByGeneAndGroup(
             molecularProfileCaseSets,
             copyNumberEventType,
-            enrichmentType,
-            exludeVUS,
-            selectedTiers);
+            enrichmentType);
 
         return alterationEnrichmentUtil
             .createAlterationEnrichments(
@@ -47,9 +43,7 @@ public class CopyNumberEnrichmentServiceImpl implements CopyNumberEnrichmentServ
     public Map<String, List<CopyNumberCountByGene>> getCopyNumberCountByGeneAndGroup(
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets,
         CopyNumberAlterationEventType copyNumberEventType,
-        EnrichmentType enrichmentType,
-        boolean exludeVUS,
-        List<String> selectedTiers) {
+        EnrichmentType enrichmentType) {
         return molecularProfileCaseSets
             .entrySet()
             .stream()

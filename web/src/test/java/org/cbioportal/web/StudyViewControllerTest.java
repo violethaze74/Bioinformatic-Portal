@@ -303,11 +303,11 @@ public class StudyViewControllerTest {
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].entrezGeneId").value(TEST_ENTREZ_GENE_ID_2))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].hugoGeneSymbol").value(TEST_HUGO_GENE_SYMBOL_2))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].numberOfAlteredCases").value(2))
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].numberOfAlterations").value(2))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].totalCount").value(2))
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].entrezGeneId").value(TEST_ENTREZ_GENE_ID_1))
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].hugoGeneSymbol").value(TEST_HUGO_GENE_SYMBOL_1))
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].numberOfAlteredCases").value(1))
-            .andExpect(MockMvcResultMatchers.jsonPath("$[1].numberOfAlterations").value(3));
+            .andExpect(MockMvcResultMatchers.jsonPath("$[1].totalCount").value(3));
     }
 
     @Test
@@ -357,11 +357,11 @@ public class StudyViewControllerTest {
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].entrezGeneId").value(TEST_ENTREZ_GENE_ID_2))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].hugoGeneSymbol").value(TEST_HUGO_GENE_SYMBOL_2))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].numberOfAlteredCases").value(2))
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].numberOfAlterations").value(2))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].totalCount").value(2))
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].entrezGeneId").value(TEST_ENTREZ_GENE_ID_1))
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].hugoGeneSymbol").value(TEST_HUGO_GENE_SYMBOL_1))
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].numberOfAlteredCases").value(1))
-            .andExpect(MockMvcResultMatchers.jsonPath("$[1].numberOfAlterations").value(1));
+            .andExpect(MockMvcResultMatchers.jsonPath("$[1].totalCount").value(1));
     }
 
     @Test
@@ -416,13 +416,13 @@ public class StudyViewControllerTest {
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].numberOfAlteredCases").value(2))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].cytoband").value(TEST_CYTOBAND_2))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].alteration").value(2))
-            .andExpect(MockMvcResultMatchers.jsonPath("$[0].numberOfAlterations").doesNotExist())
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].totalCount").doesNotExist())
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].entrezGeneId").value(TEST_ENTREZ_GENE_ID_1))
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].hugoGeneSymbol").value(TEST_HUGO_GENE_SYMBOL_1))
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].numberOfAlteredCases").value(1))
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].cytoband").value(TEST_CYTOBAND_1))
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].alteration").value(-2))
-            .andExpect(MockMvcResultMatchers.jsonPath("$[1].numberOfAlterations").doesNotExist());
+            .andExpect(MockMvcResultMatchers.jsonPath("$[1].totalCount").doesNotExist());
     }
 
     @Test
