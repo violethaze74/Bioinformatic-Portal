@@ -8,7 +8,6 @@ import org.cbioportal.service.util.AlterationEnrichmentUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,8 +27,7 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                                                                  boolean includeFrequency,
                                                                  boolean includeMissingAlterationsFromGenePanel,
                                                                  Select<MutationEventType> mutationEventTypes,
-                                                                 Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                                 boolean searchFusions) {
+                                                                 Select<CopyNumberAlterationEventType> cnaEventTypes) {
         
         List<AlterationCountByGene> alterationCountByGenes;
         if (molecularProfileCaseIdentifiers.isEmpty()) {
@@ -38,8 +36,7 @@ public class AlterationCountServiceImpl implements AlterationCountService {
             alterationCountByGenes = alterationRepository.getSampleAlterationCounts(molecularProfileCaseIdentifiers,
                 entrezGeneIds,
                 mutationEventTypes,
-                cnaEventTypes,
-                searchFusions);
+                cnaEventTypes);
             if (includeFrequency) {
                 alterationEnrichmentUtil.includeFrequencyForSamples(molecularProfileCaseIdentifiers,
                     alterationCountByGenes,
@@ -56,15 +53,14 @@ public class AlterationCountServiceImpl implements AlterationCountService {
                                                                   boolean includeFrequency,
                                                                   boolean includeMissingAlterationsFromGenePanel,
                                                                   Select<MutationEventType> mutationEventTypes,
-                                                                  Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                                  boolean searchFusions) {
+                                                                  Select<CopyNumberAlterationEventType> cnaEventTypes) {
         
         List<AlterationCountByGene> alterationCountByGenes;
         if (molecularProfileCaseIdentifiers.isEmpty()) {
             alterationCountByGenes = Collections.emptyList();
         } else {
             alterationCountByGenes = alterationRepository.getPatientAlterationCounts(molecularProfileCaseIdentifiers,
-                    entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
+                    entrezGeneIds, mutationEventTypes, cnaEventTypes);
             if (includeFrequency) {
                 alterationEnrichmentUtil.includeFrequencyForPatients(molecularProfileCaseIdentifiers, alterationCountByGenes, includeMissingAlterationsFromGenePanel);
             }
@@ -84,8 +80,8 @@ public class AlterationCountServiceImpl implements AlterationCountService {
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
             mutationEventTypes,
-            Select.none(),
-            false);
+            Select.none()
+        );
     }
 
     @Override
@@ -99,8 +95,8 @@ public class AlterationCountServiceImpl implements AlterationCountService {
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
             mutationEventTypes,
-            Select.none(),
-            false);
+            Select.none()
+        );
     }
 
     @Override
@@ -114,8 +110,8 @@ public class AlterationCountServiceImpl implements AlterationCountService {
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
             mutationEventTypes,
-            Select.none(),
-            true);
+            Select.none()
+        );
     }
 
     @Override
@@ -129,8 +125,8 @@ public class AlterationCountServiceImpl implements AlterationCountService {
             includeFrequency,
             includeMissingAlterationsFromGenePanel,
             mutationEventTypes,
-            Select.none(),
-            true);    }
+            Select.none()
+        );    }
             
 // -- Should be reinstated when the legacy CNA count endpoint retires            
 //    @Override

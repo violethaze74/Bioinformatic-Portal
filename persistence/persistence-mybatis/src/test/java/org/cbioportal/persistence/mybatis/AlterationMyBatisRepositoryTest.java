@@ -49,7 +49,6 @@ public class AlterationMyBatisRepositoryTest {
     List<MolecularProfileCaseIdentifier> sampleIdToProfileId = new ArrayList<>();
     List<MolecularProfileCaseIdentifier> patientIdToProfileId = new ArrayList<>();
     List<Integer> entrezGeneIds = new ArrayList<>();
-    boolean searchFusions = false;
 
     @Before
     public void setup() {
@@ -84,7 +83,7 @@ public class AlterationMyBatisRepositoryTest {
 
         cnaEventTypes = Select.none();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
+            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes);
 
         Assert.assertEquals(3, result.size());
         AlterationCountByGene result672 = result.stream().filter(r -> r.getEntrezGeneId() == 672).findFirst().get();
@@ -103,7 +102,7 @@ public class AlterationMyBatisRepositoryTest {
 
         mutationEventTypes = Select.none();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
+            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes);
 
         Assert.assertEquals(2, result.size());
         AlterationCountByGene result207 = result.stream().filter(r -> r.getEntrezGeneId() == 207).findFirst().get();
@@ -118,7 +117,7 @@ public class AlterationMyBatisRepositoryTest {
     public void getSampleMutationAndCnaCount() throws Exception {
 
         List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
+            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes);
 
         Assert.assertEquals(3, result.size());
         AlterationCountByGene result672 = result.stream().filter(r -> r.getEntrezGeneId() == 672).findFirst().get();
@@ -133,23 +132,11 @@ public class AlterationMyBatisRepositoryTest {
     }
 
     @Test
-    public void getSampleMutationCountFilterFusions() throws Exception {
-
-        searchFusions = true;
-
-        cnaEventTypes = Select.none();
-        List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
-        // there are no fusion mutations in the test db
-        Assert.assertEquals(0, result.size());
-    }
-
-    @Test
     public void getPatientMutationCount() throws Exception {
 
         cnaEventTypes = Select.none();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getPatientAlterationCounts(
-            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
+            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes);
 
         // For testSql.sql there are no more samples per patient for the investigated genes.
         // Therefore, patient level counts are the same as the sample level counts.
@@ -170,7 +157,7 @@ public class AlterationMyBatisRepositoryTest {
 
         mutationEventTypes = Select.none();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getPatientAlterationCounts(
-            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
+            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes);
 
         // For testSql.sql there are no more samples per patient for the investigated genes.
         // Therefore, patient level counts are the same as the sample level counts.
@@ -187,7 +174,7 @@ public class AlterationMyBatisRepositoryTest {
     public void getPatientMutationAndCnaCount() throws Exception {
 
         List<AlterationCountByGene> result = alterationMyBatisRepository.getPatientAlterationCounts(
-            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
+            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes);
 
         // For testSql.sql there are no more samples per patient for the investigated genes.
         // Therefore, patient level counts are the same as the sample level counts.
@@ -201,17 +188,6 @@ public class AlterationMyBatisRepositoryTest {
         Assert.assertEquals((Integer) 2, result207.getNumberOfAlteredCases());
         Assert.assertEquals((Integer) 2, result208.getTotalCount());
         Assert.assertEquals((Integer) 2, result208.getNumberOfAlteredCases());
-    }
-
-    @Test
-    public void getPatientMutationCountFilterFusions() throws Exception {
-
-        searchFusions = true;
-        cnaEventTypes = Select.none();
-        List<AlterationCountByGene> result = alterationMyBatisRepository.getPatientAlterationCounts(
-            patientIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
-        // there are no fusion mutations in the test db
-        Assert.assertEquals(0, result.size());
     }
 
     @Test
@@ -256,7 +232,7 @@ public class AlterationMyBatisRepositoryTest {
         mutationEventTypes = Select.none();
         cnaEventTypes = Select.none();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
+            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes);
 
         Assert.assertEquals(0, result.size());
     }
@@ -267,7 +243,7 @@ public class AlterationMyBatisRepositoryTest {
         mutationEventTypes = Select.all();
         cnaEventTypes = Select.all();
         List<AlterationCountByGene> result = alterationMyBatisRepository.getSampleAlterationCounts(
-            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes, searchFusions);
+            sampleIdToProfileId, entrezGeneIds, mutationEventTypes, cnaEventTypes);
 
         Assert.assertEquals(3, result.size());
     }

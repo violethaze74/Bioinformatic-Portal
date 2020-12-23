@@ -44,8 +44,6 @@ public class AlterationEnrichmentController {
         // prevent reference to this attribute in the swagger-ui interface. this attribute is needed for the @PreAuthorize tag above.
         @Valid @RequestAttribute(required = false, value = "interceptedMolecularProfileCasesGroupFilters") List<MolecularProfileCasesGroupFilter> interceptedMolecularProfileCasesGroupFilters,
         @ApiIgnore
-//        @ApiParam(required = true, value = "Lists of mutation and copy number alteration types included in counts. Empty " +
-//            "array will include no respective types. undefined will include all respective types.")
         @Valid @RequestAttribute(required = false, value = "alterationEventTypes") AlterationEventTypeFilter alterationEventTypes,
         @ApiParam("Type of the enrichment e.g. SAMPLE or PATIENT")
         @RequestParam(defaultValue = "SAMPLE") EnrichmentType enrichmentType,
@@ -72,8 +70,7 @@ public class AlterationEnrichmentController {
             groupCaseIdentifierSet,
             mutationEventTypes,
             cnaEventTypes,
-            enrichmentType,
-            false);
+            enrichmentType);
 
         return new ResponseEntity<>(alterationEnrichments, HttpStatus.OK);
     }

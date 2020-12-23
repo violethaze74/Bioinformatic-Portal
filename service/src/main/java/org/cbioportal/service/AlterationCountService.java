@@ -12,16 +12,14 @@ public interface AlterationCountService {
                                                           boolean includeFrequency,
                                                           boolean includeMissingAlterationsFromGenePanel,
                                                           Select<MutationEventType> mutationEventTypes,
-                                                          Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                          boolean searchFusions);
+                                                          Select<CopyNumberAlterationEventType> cnaEventTypes);
 
     List<AlterationCountByGene> getPatientAlterationCounts(List<MolecularProfileCaseIdentifier> molecularProfileCaseIdentifiers,
                                                            List<Integer> entrezGeneIds,
                                                            boolean includeFrequency,
                                                            boolean includeMissingAlterationsFromGenePanel,
                                                            Select<MutationEventType> mutationEventTypes,
-                                                           Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                           boolean searchFusions);
+                                                           Select<CopyNumberAlterationEventType> cnaEventTypes);
 
     List<AlterationCountByGene> getSampleMutationCounts(List<MolecularProfileCaseIdentifier> molecularProfileCaseIdentifiers,
                                                         List<Integer> entrezGeneIds,

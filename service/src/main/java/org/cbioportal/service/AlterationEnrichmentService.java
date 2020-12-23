@@ -13,7 +13,6 @@ public interface AlterationEnrichmentService {
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets,
         final Select<MutationEventType> mutationEventTypes,
         final Select<CopyNumberAlterationEventType> cnaEventTypes,
-        EnrichmentType enrichmentType,
-        boolean searchFusions)
+        EnrichmentType enrichmentType)
         throws MolecularProfileNotFoundException;
 }

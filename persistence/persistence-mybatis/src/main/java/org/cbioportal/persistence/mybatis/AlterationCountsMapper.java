@@ -14,14 +14,12 @@ public interface AlterationCountsMapper {
      * @param entrezGeneIds  List of gene ids to get counts for.
      * @param mutationTypes  Types of mutations to include in alteration counts. When 'null' all types will be included. When empty list mutations will be excluded from counts. 
      * @param cnaTypes  Types of discrete copy number alteration types to include in alteration counts. When 'null' all types will be included. When empty list mutations will be excluded from counts.
-     * @param searchFusions  When 'true' mutation counts will be limited to fusion type alterations. When 'false' mutation counts will be limited to non-fusion alterations.
      * @return Gene-level counts of (1) the total number of alterations and (2) the number of altered samples.
      */
     List<AlterationCountByGene> getSampleAlterationCounts(List<Integer> internalSampleIds,
                                                           List<Integer> entrezGeneIds,
                                                           Select<String> mutationTypes,
-                                                          Select<Integer> cnaTypes,
-                                                          boolean searchFusions);
+                                                          Select<Integer> cnaTypes);
 
     /**
      * Gets internal sample ids for samples that match (molecularProfileId, sampleId) pair
@@ -39,14 +37,12 @@ public interface AlterationCountsMapper {
      * @param entrezGeneIds  List of gene ids to get counts for.
      * @param mutationTypes  Types of mutations to include in alteration counts. When 'null' all types will be included. When empty list mutations will be excluded from counts. 
      * @param cnaTypes  Types of discrete copy number alteration types to include in alteration counts. When 'null' all types will be included. When empty list mutations will be excluded from counts.
-     * @param searchFusions  When 'true' mutation counts will be limited to fusion type alterations. When 'false' mutation counts will be limited to non-fusion alterations.
      * @return Gene-level counts of (1) the total number of alterations and (2) the number of altered patients.
      */
     List<AlterationCountByGene> getPatientAlterationCounts(List<Integer> internalPatientIds,
                                                            List<Integer> entrezGeneIds,
                                                            Select<String> mutationTypes,
-                                                           Select<Integer> cnaTypes,
-                                                           boolean searchFusions);
+                                                           Select<Integer> cnaTypes);
 
 
     /**

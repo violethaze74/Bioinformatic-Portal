@@ -21,8 +21,7 @@ public class AlterationMyBatisRepository implements AlterationRepository {
     public List<AlterationCountByGene> getSampleAlterationCounts(List<MolecularProfileCaseIdentifier> molecularProfileCaseIdentifiers,
                                                                  List<Integer> entrezGeneIds,
                                                                  final Select<MutationEventType> mutationEventTypes,
-                                                                 final Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                                 boolean searchFusions) {
+                                                                 final Select<CopyNumberAlterationEventType> cnaEventTypes) {
 
         if ((mutationEventTypes.hasNone() && cnaEventTypes.hasNone())
             || molecularProfileCaseIdentifiers.isEmpty()) {
@@ -40,16 +39,14 @@ public class AlterationMyBatisRepository implements AlterationRepository {
             internalSampleIds,
             entrezGeneIds,
             createMutationTypeList(mutationEventTypes),
-            createCnaTypeList(cnaEventTypes),
-            searchFusions);
+            createCnaTypeList(cnaEventTypes));
     }
 
     @Override
     public List<AlterationCountByGene> getPatientAlterationCounts(List<MolecularProfileCaseIdentifier> molecularProfileCaseIdentifiers,
                                                                   List<Integer> entrezGeneIds,
                                                                   Select<MutationEventType> mutationEventTypes,
-                                                                  Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                                  boolean searchFusions) {
+                                                                  Select<CopyNumberAlterationEventType> cnaEventTypes) {
 
         if ((mutationEventTypes.hasNone() && cnaEventTypes.hasNone())
             || molecularProfileCaseIdentifiers.isEmpty()) {
@@ -68,8 +65,7 @@ public class AlterationMyBatisRepository implements AlterationRepository {
             internalPatientIds,
             entrezGeneIds,
             createMutationTypeList(mutationEventTypes),
-            createCnaTypeList(cnaEventTypes),
-            searchFusions);
+            createCnaTypeList(cnaEventTypes));
     }
 
     @Override

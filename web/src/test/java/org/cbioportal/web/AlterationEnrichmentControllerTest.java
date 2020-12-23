@@ -145,8 +145,7 @@ public class AlterationEnrichmentControllerTest {
             anyMap(),
             any(Select.class),
             any(Select.class),
-            any(),
-            anyBoolean()))
+            any()))
             .thenReturn(alterationEnrichments);
         
         mockMvc.perform(MockMvcRequestBuilders.post(
@@ -182,8 +181,7 @@ public class AlterationEnrichmentControllerTest {
             anyMap(),
             any(Select.class),
             any(Select.class),
-            any(),
-            anyBoolean()))
+            any()))
             .thenReturn(alterationEnrichments);
         
         filter.getAlterationEventTypes().getMutationEventTypes().put(MutationEventType.missense_mutation, false);
@@ -222,8 +220,7 @@ public class AlterationEnrichmentControllerTest {
             anyMap(),
             any(Select.class),
             any(Select.class),
-            any(),
-            anyBoolean()))
+            any()))
             .thenReturn(alterationEnrichments);
 
         filter.getAlterationEventTypes().getMutationEventTypes().put(MutationEventType.missense_mutation, false);
@@ -261,8 +258,7 @@ public class AlterationEnrichmentControllerTest {
             anyMap(),
             any(Select.class),
             any(Select.class),
-            any(),
-            anyBoolean()))
+            any()))
             .thenReturn(alterationEnrichments);
 
         filter.getAlterationEventTypes().getCopyNumberAlterationEventTypes().put(CopyNumberAlterationEventType.AMP, false);

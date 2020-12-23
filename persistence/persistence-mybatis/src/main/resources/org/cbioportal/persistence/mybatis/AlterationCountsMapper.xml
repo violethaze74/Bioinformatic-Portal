@@ -38,7 +38,6 @@
                         #{internalSampleId}
                     </foreach>
                 </if>
-                <include refid="whereSearchFusions"/>
             </where>
             UNION ALL
             SELECT
@@ -116,7 +115,6 @@
                         #{internalPatientId}
                     </foreach>
                 </if>
-                <include refid="whereSearchFusions"/>
             </where>
             UNION ALL
             SELECT
@@ -301,17 +299,6 @@
         </if>
         GROUP BY cna_event.ENTREZ_GENE_ID, cna_event.ALTERATION, gene.HUGO_GENE_SYMBOL
     </select>
-
-    <sql id="whereSearchFusions">
-        <if test="searchFusions">
-            AND
-            mutation_event.MUTATION_TYPE = 'Fusion'
-        </if>
-        <if test="!searchFusions">
-            AND
-            mutation_event.MUTATION_TYPE != 'Fusion'
-        </if>
-    </sql>
 
     <sql id="whereGene">
         <if test="entrezGeneIds != null and !entrezGeneIds.isEmpty()">

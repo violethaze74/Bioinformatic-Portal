@@ -13,16 +13,14 @@ public interface AlterationRepository {
     List<AlterationCountByGene> getSampleAlterationCounts(List<MolecularProfileCaseIdentifier> molecularProfileCaseIdentifiers,
                                                           List<Integer> entrezGeneIds,
                                                           final Select<MutationEventType> mutationEventTypes,
-                                                          final Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                          boolean searchFusions);
+                                                          final Select<CopyNumberAlterationEventType> cnaEventTypes);
 
     @Cacheable(cacheNames = "GeneralRepositoryCache", condition = "@cacheEnabledConfig.getEnabled()")
     // TODO write javadoc
     List<AlterationCountByGene> getPatientAlterationCounts(List<MolecularProfileCaseIdentifier> molecularProfileCaseIdentifiers,
                                                            List<Integer> entrezGeneIds,
                                                            final Select<MutationEventType> mutationEventTypes,
-                                                           final Select<CopyNumberAlterationEventType> cnaEventTypes,
-                                                           boolean searchFusions);
+                                                           final Select<CopyNumberAlterationEventType> cnaEventTypes);
 
 
     @Cacheable(cacheNames = "GeneralRepositoryCache", condition = "@cacheEnabledConfig.getEnabled()")

@@ -23,10 +23,10 @@ public class AlterationEnrichmentServiceImpl implements AlterationEnrichmentServ
     @Override
     public List<AlterationEnrichment> getAlterationEnrichments(
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets, final Select<MutationEventType> mutationEventTypes,
-        final Select<CopyNumberAlterationEventType> cnaEventTypes, EnrichmentType enrichmentType, boolean searchFusions) {
+        final Select<CopyNumberAlterationEventType> cnaEventTypes, EnrichmentType enrichmentType) {
 
         Map<String, List<AlterationCountByGene>> alterationCountsbyEntrezGeneIdAndGroup = getAlterationCountsbyEntrezGeneIdAndGroup(
-            molecularProfileCaseSets, mutationEventTypes, cnaEventTypes, enrichmentType, searchFusions);
+            molecularProfileCaseSets, mutationEventTypes, cnaEventTypes, enrichmentType);
 
         return alterationEnrichmentUtil.createAlterationEnrichments(alterationCountsbyEntrezGeneIdAndGroup,
                 molecularProfileCaseSets);
@@ -36,8 +36,7 @@ public class AlterationEnrichmentServiceImpl implements AlterationEnrichmentServ
         Map<String, List<MolecularProfileCaseIdentifier>> molecularProfileCaseSets,
         Select<MutationEventType> mutationEventTypes,
         Select<CopyNumberAlterationEventType> cnaEventTypes,
-        EnrichmentType enrichmentType,
-        boolean searchFusions) {
+        EnrichmentType enrichmentType) {
         return molecularProfileCaseSets
             .entrySet()
             .stream()
@@ -53,8 +52,7 @@ public class AlterationEnrichmentServiceImpl implements AlterationEnrichmentServ
                                 true,
                                 true,
                                 mutationEventTypes,
-                                cnaEventTypes,
-                                searchFusions);
+                                cnaEventTypes);
                     } else {
                         return alterationCountService
                             .getPatientAlterationCounts(
@@ -63,8 +61,7 @@ public class AlterationEnrichmentServiceImpl implements AlterationEnrichmentServ
                                 true,
                                 true,
                                 mutationEventTypes,
-                                cnaEventTypes,
-                                searchFusions);
+                                cnaEventTypes);
                     }
                 }));
     }
