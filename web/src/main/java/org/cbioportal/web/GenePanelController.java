@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.cbioportal.model.GenePanel;
 import org.cbioportal.model.GenePanelData;
-import org.cbioportal.model.MolecularProfileCaseIdentifier;
 import org.cbioportal.service.exception.GenePanelNotFoundException;
 import org.cbioportal.service.exception.MolecularProfileNotFoundException;
 import org.cbioportal.service.GenePanelService;
@@ -39,7 +38,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import javax.validation.Valid;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @PublicApi
 @RestController
@@ -139,17 +137,17 @@ public class GenePanelController {
         @Size(min = 1, max = PagingConstants.MAX_PAGE_SIZE)
         @RequestBody(required = false) List<SampleMolecularIdentifier> sampleMolecularIdentifiers) {
 
-        List<MolecularProfileCaseIdentifier> molecularProfileSampleIdentifiers = interceptedGenePanelSampleMolecularIdentifiers
-            .stream()
-            .map(sampleMolecularIdentifier -> {
-                MolecularProfileCaseIdentifier profileCaseIdentifier = new MolecularProfileCaseIdentifier();
-                profileCaseIdentifier.setMolecularProfileId(sampleMolecularIdentifier.getMolecularProfileId());
-                profileCaseIdentifier.setCaseId(sampleMolecularIdentifier.getSampleId());
-                return profileCaseIdentifier;
-            })
-            .collect(Collectors.toList());
+        List<String> molecularProfileIds = new ArrayList<>();
+        List<String> sampleIds = new ArrayList<>();
 
-        List<GenePanelData> genePanelDataList = genePanelService.fetchGenePanelDataInMultipleMolecularProfiles(molecularProfileSampleIdentifiers);
+        for (SampleMolecularIdentifier sampleMolecularIdentifier :
+            interceptedGenePanelSampleMolecularIdentifiers) {
+
+            molecularProfileIds.add(sampleMolecularIdentifier.getMolecularProfileId());
+            sampleIds.add(sampleMolecularIdentifier.getSampleId());
+        }
+        List<GenePanelData> genePanelDataList = genePanelService.fetchGenePanelDataInMultipleMolecularProfiles(
+            molecularProfileIds, sampleIds);
 
         return new ResponseEntity<>(genePanelDataList, HttpStatus.OK);
     }

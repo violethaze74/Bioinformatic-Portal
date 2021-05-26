@@ -3,7 +3,6 @@ package org.cbioportal.persistence.mybatis;
 import org.cbioportal.model.GenePanel;
 import org.cbioportal.model.GenePanelData;
 import org.cbioportal.model.GenePanelToGene;
-import org.cbioportal.model.MolecularProfileCaseIdentifier;
 import org.cbioportal.model.meta.BaseMeta;
 
 import java.util.List;
@@ -22,12 +21,12 @@ public interface GenePanelMapper {
     List<GenePanelData> getGenePanelDataBySampleListId(String molecularProfileId, String sampleListId);
 
     List<GenePanelData> getGenePanelDataBySampleIds(String molecularProfileId, List<String> sampleIds);
-    
-    List<GenePanelData> fetchGenePanelDataByMolecularProfileIds(List<String> molecularProfileIds);
 
-    List<GenePanelData> fetchGenePanelDataInMultipleMolecularProfiles(List<MolecularProfileCaseIdentifier> molecularProfileSampleIdentifiers);
+    List<GenePanelData> fetchGenePanelDataInMultipleMolecularProfiles(List<String> molecularProfileIds,
+                                                                      List<String> sampleIds);
 
-    List<GenePanelData> fetchGenePanelDataInMultipleMolecularProfilesByPatientIds(List<MolecularProfileCaseIdentifier> molecularProfileSampleIdentifiers);
+    List<GenePanelData> fetchGenePanelDataInMultipleMolecularProfilesByPatientIds(List<String> molecularProfileIds,
+                                                                      List<String> patientIds);
 
     List<GenePanelToGene> getGenesOfPanels(List<String> genePanelIds);
 }

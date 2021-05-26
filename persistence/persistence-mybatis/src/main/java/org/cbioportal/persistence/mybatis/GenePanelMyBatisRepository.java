@@ -3,7 +3,6 @@ package org.cbioportal.persistence.mybatis;
 import org.cbioportal.model.GenePanel;
 import org.cbioportal.model.GenePanelData;
 import org.cbioportal.model.GenePanelToGene;
-import org.cbioportal.model.MolecularProfileCaseIdentifier;
 import org.cbioportal.model.meta.BaseMeta;
 import org.cbioportal.persistence.GenePanelRepository;
 import org.cbioportal.persistence.PersistenceConstants;
@@ -60,19 +59,17 @@ public class GenePanelMyBatisRepository implements GenePanelRepository {
     }
 
     @Override
-    public List<GenePanelData> fetchGenePanelDataByMolecularProfileIds(List<String> molecularProfileIds) {
-
-        return genePanelMapper.fetchGenePanelDataByMolecularProfileIds(molecularProfileIds);
-    }
-
-    @Override
-    public List<GenePanelData> fetchGenePanelDataInMultipleMolecularProfiles(List<MolecularProfileCaseIdentifier> molecularProfileSampleIdentifiers) {
-        return genePanelMapper.fetchGenePanelDataInMultipleMolecularProfiles(molecularProfileSampleIdentifiers);
-    }
+    public List<GenePanelData> fetchGenePanelDataInMultipleMolecularProfiles(List<String> molecularProfileIds, 
+        List<String> sampleIds) {
+        
+        return genePanelMapper.fetchGenePanelDataInMultipleMolecularProfiles(molecularProfileIds, sampleIds);
+	}
 
     @Override
-    public List<GenePanelData> fetchGenePanelDataInMultipleMolecularProfilesByPatientIds(List<MolecularProfileCaseIdentifier> molecularProfileSampleIdentifiers) {
-        return genePanelMapper.fetchGenePanelDataInMultipleMolecularProfilesByPatientIds(molecularProfileSampleIdentifiers);
+    public List<GenePanelData> fetchGenePanelDataInMultipleMolecularProfilesByPatientIds(List<String> molecularProfileIds, 
+        List<String> patientIds) {
+        
+        return genePanelMapper.fetchGenePanelDataInMultipleMolecularProfilesByPatientIds(molecularProfileIds, patientIds);
     }
 
     @Override
