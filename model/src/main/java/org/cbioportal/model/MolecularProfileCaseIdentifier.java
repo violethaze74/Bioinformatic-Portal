@@ -1,9 +1,8 @@
 package org.cbioportal.model;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
-public class MolecularProfileCaseIdentifier implements Serializable {
+public class MolecularProfileCaseIdentifier {
 
     @NotNull
     private String molecularProfileId;

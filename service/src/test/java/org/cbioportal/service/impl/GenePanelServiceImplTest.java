@@ -3,11 +3,12 @@ package org.cbioportal.service.impl;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import org.cbioportal.model.*;
+import org.cbioportal.model.GenePanel;
+import org.cbioportal.model.GenePanelData;
+import org.cbioportal.model.GenePanelToGene;
+import org.cbioportal.model.MolecularProfileCaseIdentifier;
 import org.cbioportal.model.meta.BaseMeta;
 import org.cbioportal.persistence.GenePanelRepository;
-import org.cbioportal.persistence.MolecularProfileRepository;
-import org.cbioportal.persistence.StudyRepository;
 import org.cbioportal.service.exception.GenePanelNotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,10 +26,6 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
     
     @Mock
     private GenePanelRepository genePanelRepository;
-    @Mock
-    private MolecularProfileRepository molecularProfileRepository;
-    @Mock
-    private StudyRepository studyRepository;
     
     @Test
     public void getAllGenePanelsSummaryProjection() throws Exception {
@@ -228,24 +225,12 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
         profileCaseIdentifier3.setMolecularProfileId("invalid_profile");
         profileCaseIdentifier3.setCaseId(SAMPLE_ID3);
         molecularProfileSampleIdentifiers.add(profileCaseIdentifier3);
+        List<MolecularProfileCaseIdentifier> molecularProfileCaseIdentifiers = new ArrayList<>(molecularProfileSampleIdentifiers);
 
-        Mockito.when(genePanelRepository.fetchGenePanelDataInMultipleMolecularProfiles(new ArrayList<>(molecularProfileSampleIdentifiers)))
+        Mockito.when(genePanelRepository.fetchGenePanelDataInMultipleMolecularProfiles(molecularProfileCaseIdentifiers))
             .thenReturn(genePanelDataList);
-        Set<String> molecularProfileIds = molecularProfileSampleIdentifiers.stream().map(MolecularProfileCaseIdentifier::getMolecularProfileId).collect(Collectors.toSet());
 
-        MolecularProfile molecularProfile = new MolecularProfile();
-        molecularProfile.setCancerStudyIdentifier(STUDY_ID);
-        
-        Mockito.when(molecularProfileRepository.getMolecularProfiles(new ArrayList<>(molecularProfileIds), "SUMMARY"))
-            .thenReturn(Arrays.asList(molecularProfile));
-        
-        CancerStudy cancerStudy = new CancerStudy();
-        cancerStudy.setAllSampleCount(10);
-        
-        Mockito.when(studyRepository.fetchStudies(Arrays.asList(STUDY_ID), "SUMMARY"))
-            .thenReturn(Arrays.asList(cancerStudy));
-
-        List<GenePanelData> result = genePanelService.fetchGenePanelDataInMultipleMolecularProfiles(new ArrayList<>(molecularProfileSampleIdentifiers));
+        List<GenePanelData> result = genePanelService.fetchGenePanelDataInMultipleMolecularProfiles(molecularProfileCaseIdentifiers);
 
         Assert.assertEquals(2, result.size());
         GenePanelData resultGenePanelData1 = result.get(0);

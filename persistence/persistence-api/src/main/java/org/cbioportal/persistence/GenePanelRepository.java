@@ -9,7 +9,6 @@ import org.cbioportal.model.meta.BaseMeta;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
-import java.util.Set;
 
 public interface GenePanelRepository {
 
@@ -32,13 +31,13 @@ public interface GenePanelRepository {
     @Cacheable(cacheResolver = "generalRepositoryCacheResolver", condition = "@cacheEnabledConfig.getEnabled()")
     List<GenePanelData> fetchGenePanelData(String molecularProfileId, List<String> sampleIds);
 
-    List<GenePanelData> fetchGenePanelDataByMolecularProfileIds(Set<String> molecularProfileIds);
+    @Cacheable(cacheResolver = "generalRepositoryCacheResolver", condition = "@cacheEnabledConfig.getEnabled()")
+    List<GenePanelData> fetchGenePanelDataByMolecularProfileIds(List<String> molecularProfileIds);
 
     @Cacheable(cacheResolver = "generalRepositoryCacheResolver", condition = "@cacheEnabledConfig.getEnabled()")
-    List<GenePanelData> fetchGenePanelDataByMolecularProfileId(String molecularProfileId);
-
     List<GenePanelData> fetchGenePanelDataInMultipleMolecularProfiles(List<MolecularProfileCaseIdentifier> molecularProfileSampleIdentifiers);
 
+    @Cacheable(cacheResolver = "generalRepositoryCacheResolver", condition = "@cacheEnabledConfig.getEnabled()")
     List<GenePanelData> fetchGenePanelDataInMultipleMolecularProfilesByPatientIds(List<MolecularProfileCaseIdentifier> molecularProfileSampleIdentifiers);
 
     @Cacheable(cacheResolver = "generalRepositoryCacheResolver", condition = "@cacheEnabledConfig.getEnabled()")
