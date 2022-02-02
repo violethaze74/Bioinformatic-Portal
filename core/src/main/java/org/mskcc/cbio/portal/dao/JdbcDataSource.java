@@ -19,7 +19,7 @@ public class JdbcDataSource extends BasicDataSource {
         String enablePooling = (!StringUtils.isBlank(dbProperties.getDbEnablePooling())) ? dbProperties.getDbEnablePooling(): "false";
         String url ="jdbc:mysql://" + host + "/" + database +
                         "?user=" + userName + "&password=" + password +
-                        "&zeroDateTimeBehavior=convertToNull&useSSL=" + useSSL;
+                        "&zeroDateTimeBehavior=convertToNull&tcpKeepAlive=true&useSSL=" + useSSL;
         //  Set up poolable data source
         this.setDriverClassName(mysqlDriverClassName);
         this.setUsername(userName);
